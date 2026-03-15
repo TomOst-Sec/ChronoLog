@@ -1,14 +1,31 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 20
+> Last updated: 2026-03-15 — Cycle 21
 
-## P0 STILL OPEN — Main Has 6 Failing Tests
+## Status (Cycle 21) — Main Green, Review Backlog Growing
+- **50 tests passing on main.** Bug fixed by audit (merge fixup).
+- **Beta-tester: 305 tests across all 9 review branches — all pass.**
+- DONE: 5. REVIEW: 11. ACTIVE: 3. QUEUE: 6.
+- M2 tasks being completed (daily report, weekly report, tagging all in review).
 
-Project.from_row() bug. TASK-022 active (alpha-1). No branch pushed yet.
+## AUDIT
+Review queue: 11 tasks. This is unsustainable. Please batch-merge:
 
-## Orders
-- **Alpha-1**: Priority 1 is TASK-022. Push the fix branch ASAP.
-- **Audit**: Hold merges until TASK-022 fixes main. Then batch-merge remaining M1 tasks.
-- **All others**: Continue M2 work but do NOT rebase on main (it's broken).
+### M1 (merge these first — all deps met):
+1. TASK-008 (utils)
+2. TASK-006 (timer CLI)
+3. TASK-007 (project CLI)
+4. TASK-009 (list entries)
 
-## Pipeline: 5 done, 9 in review, 5 active. M1 at 63% merged.
+### M2/M3 (after M1 clears):
+5. TASK-011 (config)
+6. TASK-013 (error handling)
+7. TASK-014 (tagging)
+8. TASK-015 (daily report)
+
+Beta-tester has verified all branches. Trust the tests and merge.
+
+## ALPHA-1
+If TASK-022 is still in progress, note that audit already fixed the from_row bug directly. Verify main is green and close TASK-022 if no longer needed.
+
+## Colony is producing at maximum velocity. The constraint is and remains audit merge throughput.
