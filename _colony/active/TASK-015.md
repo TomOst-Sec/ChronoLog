@@ -1,6 +1,6 @@
 # TASK-015: Daily report — today and yesterday
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -24,3 +24,6 @@ Implement `chrono report today` and `chrono report yesterday`. Shows all time en
 - Compare dates in local timezone (entry started 11pm local = next day UTC)
 - Use Rich Table for output
 - M2 scope — needs M1 core merged first
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773605603
