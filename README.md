@@ -4,13 +4,30 @@ A command-line time tracker for developers who want to log their workday without
 
 ## Status
 
-**Pre-alpha** -- Project scaffolding is in progress. No working code exists yet.
+**Pre-alpha** -- Project scaffolding is in place. Core features (timer, projects, database) are under active development.
 
-## Vision
+## Install
 
-ChronoLog will be a local-first CLI tool that lets you start/stop timers, organize time entries by project and tags, generate reports, and export to CSV. All data stays on your machine in a single SQLite database. No cloud, no accounts, no subscriptions.
+Requires Python 3.10+.
 
-## Planned Tech Stack
+```bash
+git clone <repo-url>
+cd chronolog
+pip install -e ".[dev]"
+```
+
+## Usage
+
+Currently only the CLI skeleton is available:
+
+```bash
+chrono --version    # prints 0.1.0
+chrono --help       # shows available commands
+```
+
+Timer, project management, and database commands are in progress and not yet available.
+
+## Tech Stack
 
 - Python 3.10+
 - SQLite (built-in `sqlite3` module)
