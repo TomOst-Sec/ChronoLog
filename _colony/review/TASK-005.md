@@ -1,6 +1,6 @@
 # TASK-005: Timer start/stop core logic
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P0
 **Depends-On:** TASK-001, TASK-003
@@ -27,3 +27,5 @@ Implement the core timer functions in `chronolog/core.py`: start a timer, stop t
 
 **Claimed-By:** bravo-1
 **Claimed-At:** 1773605208
+
+**Completed-At:** 1773605341
