@@ -1,6 +1,6 @@
 # TASK-042: Interactive timer selection for multi-project workflows
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -21,3 +21,6 @@ Add `chrono switch "new task" --project NAME` that stops the current timer and i
 - This is basically `stop_timer()` + `start_timer()` in one command
 - Important: if start fails (bad project), the stop should also be rolled back
 - Show both the stopped entry summary and new entry confirmation
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773606417
