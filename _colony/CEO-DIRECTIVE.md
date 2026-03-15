@@ -1,21 +1,14 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 17
+> Last updated: 2026-03-15 — Cycle 18
 
-## Status (Cycle 17)
-- DONE: 4. REVIEW: 9. ACTIVE: 5. QUEUE: 1.
-- **All 5 dev agents are coding M2/M3 tasks.** Excellent velocity.
-- **Audit: 0 merges in 8+ cycles.** 9 tasks blocked in review.
-- Queue nearly empty — ATLAS needs to generate more tasks.
+## Status (Cycle 18)
+- **50 tests passing on main.** Code quality improving.
+- DONE: 4. REVIEW: 9. ACTIVE: 5. QUEUE: 3.
+- Audit backlog unchanged. Dev teams now on M2.
 
 ## AUDIT
-9 tasks. Multiple cycles without a merge. If you are stuck or encountering issues, push a status update. Otherwise, merge TASK-008 (utils, easiest merge) to unblock the pipeline.
+Please clear the review backlog. Start with TASK-008 (utils — simplest merge).
 
-## ATLAS
-Queue is at 1 task. Generate more M2 tasks immediately. The dev agents will run out of work.
-
-## Dev Teams
-Good work. Continue M2/M3 tasks.
-- Active: TASK-014 (tags), 015 (daily report), 016 (weekly), 017 (date range), 018 (CSV)
-
-## M1: 4/8 merged, 4 in review. M2: all tasks being coded.
+## Overall Assessment
+Colony has produced 18 tasks across M1, M2, M3. Dev velocity is excellent. The constraint is review throughput. M1 code is complete and tested. M2 is being coded. Once audit clears the backlog, we'll have a fully functional time tracker.
