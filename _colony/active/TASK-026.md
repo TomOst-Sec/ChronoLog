@@ -1,6 +1,6 @@
 # TASK-026: Shell completion support for Click CLI
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001
@@ -21,3 +21,6 @@ Enable shell tab-completion for all `chrono` commands. Click has built-in comple
 - Click 8.x has built-in shell completion — use `shell_complete` parameter
 - For project name completion, use a callback that queries the database
 - Keep it simple — don't complete tags or descriptions
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773605854
