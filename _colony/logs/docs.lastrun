@@ -1,1 +1,1 @@
-2026-03-15T22:20:00Z cycle=4 status=complete notes="Document TASK-001/002/003/004/005 merges. README: What's Implemented, project CRUD. Dev guide: project management API."
+2026-03-15T22:30:00Z cycle=5 status=complete notes="Major update: CLI fully documented (start/stop/status/project/config). New modules: config.py, exceptions.py. TASK-006/007/011/013 merged."
