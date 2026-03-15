@@ -4,7 +4,7 @@ A command-line time tracker for developers who want to log their workday without
 
 ## Status
 
-**Pre-alpha (M1 nearing completion)** -- Timer, project management, entry listing, and configuration are functional via CLI.
+**Alpha** -- All three milestones are implemented. M1 (Core Timer) is fully available via CLI. M2 (Reporting & Tags) and M3 (Polish) core logic is merged to main; CLI wiring for reports, export, edit/delete, and tags is pending. 86 tests passing, 50% coverage (target: 80%).
 
 ## Install
 
@@ -78,6 +78,8 @@ All data is stored locally in `~/.chronolog/chrono.db` (SQLite). The database an
 
 Configuration is stored at `~/.chronolog/config.json`.
 
+Backups are stored in `~/.chronolog/backups/` with timestamped filenames (e.g., `chrono_20260315_143000.db`). The backup/restore API is available in `chronolog.backup` but does not yet have CLI commands.
+
 ## Roadmap
 
 ### M1: Core Timer (complete)
@@ -92,14 +94,16 @@ Configuration is stored at `~/.chronolog/config.json`.
 - ~~Custom exception classes~~
 - ~~Integration tests~~
 
-### M2: Reporting & Tags
-- Tagging system
-- Daily, weekly, and date-range reports
-- Rich terminal output for reports
+### M2: Reporting & Tags (core logic complete, CLI pending)
+- ~~Tagging system (core: `list_tags`)~~
+- ~~Report formatting helpers (Rich tables, summaries, bar charts)~~
+- Daily, weekly, and date-range report CLI commands (pending)
 
-### M3: Polish
-- CSV export
-- Edit/delete entries
+### M3: Polish (core logic complete, CLI pending)
+- ~~CSV export (core: `export_entries_csv`)~~
+- ~~Edit/delete entries (core: `edit_entry`, `delete_entry`)~~
+- ~~Database backup/restore (core: `backup_db`, `restore_db`)~~
+- CLI commands for export, edit, delete, backup (pending)
 - Final documentation
 
 ## License
