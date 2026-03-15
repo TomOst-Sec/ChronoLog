@@ -1,6 +1,6 @@
 # TASK-047: Add edit and delete entry CLI commands
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** none
@@ -25,3 +25,6 @@ Wire up the existing `edit_entry()` and `delete_entry()` functions from `core.py
 - Use `click.confirm()` for delete confirmation
 - Show the updated entry after successful edit
 - Follow error handling patterns in existing CLI commands (catch RuntimeError, print with Rich)
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773608322
