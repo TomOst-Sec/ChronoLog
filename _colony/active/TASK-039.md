@@ -1,6 +1,6 @@
 # TASK-039: Project color coding for Rich output
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -21,3 +21,6 @@ Assign colors to projects for consistent Rich terminal output. Each project gets
 - Use `hash(project_name) % len(colors)` for consistent mapping
 - Rich color names: "cyan", "green", "yellow", "magenta", "blue", "red", "white", "bright_black"
 - Keep it simple — no user-configurable colors
+
+**Claimed-By:** bravo-2
+**Claimed-At:** 1773606299
