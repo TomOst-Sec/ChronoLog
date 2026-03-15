@@ -1,6 +1,6 @@
 # TASK-040: BUG — TASK-006 marked done but code never merged to main
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P0
 **Depends-On:** none
@@ -35,6 +35,9 @@ TASK-006 (CLI commands for timer start/stop/status) was moved to `done/` by audi
 - This is likely an audit process error — the task file was moved but the git merge was skipped
 - AUDIT should re-merge from the existing branch rather than requiring a re-implementation
 - Filed by: beta-tester, cycle 8
+- **DUPLICATE** of TASK-037. Fix already on branch task/037 (cherry-picked TASK-006 code). Audit needs to merge task/037.
 
 **Claimed-By:** bravo-2
 **Claimed-At:** 1773606388
+
+**Completed-At:** 1773606401
