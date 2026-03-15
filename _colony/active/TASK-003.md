@@ -1,6 +1,6 @@
 # TASK-003: SQLite database initialization and schema
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P0
 **Depends-On:** TASK-001
@@ -23,3 +23,6 @@ Implement the SQLite database layer in `chronolog/core.py` (or a new `chronolog/
 - Store datetimes as ISO 8601 strings in SQLite
 - Use `sqlite3.Row` as row_factory so queries return dict-like rows
 - The db module should be usable by both core.py and cli.py
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773605040

@@ -1,7 +1,7 @@
 # TASK-004: Project management CRUD operations
 
 **Status:** queue
-**Assigned:** bravo
+**Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
 

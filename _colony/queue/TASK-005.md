@@ -1,7 +1,7 @@
 # TASK-005: Timer start/stop core logic
 
 **Status:** queue
-**Assigned:** alpha
+**Assigned:** bravo
 **Priority:** P0
 **Depends-On:** TASK-001, TASK-003
 
