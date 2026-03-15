@@ -1,6 +1,6 @@
 # TASK-021: CLI help text and user experience polish
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** TASK-001
@@ -25,3 +25,5 @@ Ensure all CLI commands have clear, helpful `--help` output and consistent error
 
 **Claimed-By:** bravo-2
 **Claimed-At:** 1773605842
+
+**Completed-At:** 1773605917
