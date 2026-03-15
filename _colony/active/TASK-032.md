@@ -1,6 +1,6 @@
 # TASK-032: Rounding and time display preferences
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-008
@@ -21,3 +21,6 @@ Add time rounding options for reports and display. Some users prefer times round
 - Round using: `math.ceil(minutes / round_to) * round_to`
 - Only affects display in reports and list, not the stored data
 - This is a nice-to-have feature beyond GOALS.md scope
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773606042
