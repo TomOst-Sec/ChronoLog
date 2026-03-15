@@ -4,7 +4,15 @@ from pathlib import Path
 
 import pytest
 
-from chronolog.core import get_active_timer, start_timer, stop_timer
+from chronolog.core import (
+    archive_project,
+    create_project,
+    get_active_timer,
+    get_project,
+    list_projects,
+    start_timer,
+    stop_timer,
+)
 from chronolog.db import init_db
 
 
@@ -87,3 +95,90 @@ class TestGetActiveTimer:
         entry = start_timer(db, description="second")
         assert entry.description == "second"
         assert entry.end_time is None
+
+
+class TestCreateProject:
+    def test_create_project(self, db: Path) -> None:
+        project = create_project(db, "my-project")
+        assert project.name == "my-project"
+        assert project.archived is False
+
+    def test_create_duplicate_raises(self, db: Path) -> None:
+        create_project(db, "dup-project")
+        with pytest.raises(ValueError, match="already exists"):
+            create_project(db, "dup-project")
+
+    def test_create_invalid_name_empty(self, db: Path) -> None:
+        with pytest.raises(ValueError, match="invalid"):
+            create_project(db, "")
+
+    def test_create_invalid_name_special_chars(self, db: Path) -> None:
+        with pytest.raises(ValueError, match="invalid"):
+            create_project(db, "bad name!")
+
+    def test_create_invalid_name_too_long(self, db: Path) -> None:
+        with pytest.raises(ValueError, match="invalid"):
+            create_project(db, "a" * 51)
+
+
+class TestListProjects:
+    def test_list_includes_general(self, db: Path) -> None:
+        projects = list_projects(db)
+        names = [p.name for p in projects]
+        assert "general" in names
+
+    def test_list_includes_created(self, db: Path) -> None:
+        create_project(db, "alpha")
+        create_project(db, "beta")
+        projects = list_projects(db)
+        names = [p.name for p in projects]
+        assert "alpha" in names
+        assert "beta" in names
+
+    def test_list_excludes_archived_by_default(self, db: Path) -> None:
+        create_project(db, "to-archive")
+        archive_project(db, "to-archive")
+        projects = list_projects(db)
+        names = [p.name for p in projects]
+        assert "to-archive" not in names
+
+    def test_list_includes_archived_when_requested(self, db: Path) -> None:
+        create_project(db, "to-archive")
+        archive_project(db, "to-archive")
+        projects = list_projects(db, include_archived=True)
+        names = [p.name for p in projects]
+        assert "to-archive" in names
+
+
+class TestArchiveProject:
+    def test_archive_project(self, db: Path) -> None:
+        create_project(db, "archivable")
+        archive_project(db, "archivable")
+        project = get_project(db, "archivable")
+        assert project is not None
+        assert project.archived is True
+
+    def test_archive_nonexistent_raises(self, db: Path) -> None:
+        with pytest.raises(ValueError, match="does not exist"):
+            archive_project(db, "nonexistent")
+
+    def test_archive_already_archived_raises(self, db: Path) -> None:
+        create_project(db, "already")
+        archive_project(db, "already")
+        with pytest.raises(ValueError, match="already archived"):
+            archive_project(db, "already")
+
+    def test_archive_general_raises(self, db: Path) -> None:
+        with pytest.raises(ValueError, match="general"):
+            archive_project(db, "general")
+
+
+class TestGetProject:
+    def test_get_existing(self, db: Path) -> None:
+        project = get_project(db, "general")
+        assert project is not None
+        assert project.name == "general"
+
+    def test_get_nonexistent(self, db: Path) -> None:
+        result = get_project(db, "nonexistent")
+        assert result is None

@@ -1,6 +1,6 @@
 # TASK-010: Edit and delete time entries
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -27,3 +27,5 @@ Implement the ability to edit and delete time entries. Users need to modify past
 
 **Claimed-By:** bravo-1
 **Claimed-At:** 1773605465
+
+**Completed-At:** 1773605581
