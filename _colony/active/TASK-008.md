@@ -1,6 +1,6 @@
 # TASK-008: Duration formatting and timezone display utilities
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001
@@ -24,3 +24,6 @@ Implement utility functions in `chronolog/utils.py` for formatting durations and
 - Duration formatting should handle zero duration gracefully
 - parse_tags("") should return [], not [""]
 - These are pure utility functions with no DB dependency — easy to test
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773605224
