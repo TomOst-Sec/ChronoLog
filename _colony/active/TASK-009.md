@@ -1,6 +1,6 @@
 # TASK-009: List recent time entries command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -22,3 +22,6 @@ Implement `chrono list` to show recent time entries with their IDs. This is esse
 - Duration should be formatted as "Xh Ym" (e.g., "2h 15m" or "45m") — use utils from TASK-008 if available
 - Use Rich Table for output
 - This command is needed before edit/delete can be useful
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773605232
