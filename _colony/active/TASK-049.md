@@ -1,6 +1,6 @@
 # TASK-049: Add backup and restore CLI commands
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** none
@@ -24,3 +24,6 @@ Wire up `backup.backup_db()` and `backup.restore_db()` to CLI commands under a `
 - `backup.backup_db()` and `backup.restore_db()` already exist
 - Use `click.confirm()` for restore confirmation
 - `db` should be a Click group: `chrono db backup`, `chrono db restore`
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773608455
