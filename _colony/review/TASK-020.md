@@ -1,6 +1,6 @@
 # TASK-020: Test coverage improvement — target 80%+
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -25,3 +25,5 @@ Review current test coverage, identify gaps, and add tests to reach 80%+ coverag
 
 **Claimed-By:** alpha-3
 **Claimed-At:** 1773605804
+
+**Completed-At:** 1773605894
