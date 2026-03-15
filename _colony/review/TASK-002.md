@@ -1,6 +1,6 @@
 # TASK-002: Data models for entries and projects
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P0
 **Depends-On:** TASK-001
@@ -26,3 +26,5 @@ Define the core data models in `chronolog/models.py`. These are plain Python dat
 
 **Claimed-By:** bravo-1
 **Claimed-At:** 1773605074
+
+**Completed-At:** 1773605164
