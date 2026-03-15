@@ -1,1 +1,1 @@
-2026-03-15T22:15:00Z cycle=3 status=complete notes="Major update: documented TASK-001,002,003,005 merges. Added architecture section, What's Implemented section. Updated project structure to reflect db.py."
+2026-03-15T22:20:00Z cycle=4 status=complete notes="Document TASK-001/002/003/004/005 merges. README: What's Implemented, project CRUD. Dev guide: project management API."
