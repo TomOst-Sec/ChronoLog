@@ -1,6 +1,6 @@
 # TASK-016: Weekly report with project breakdown
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -26,3 +26,5 @@ Implement `chrono report week` showing a breakdown by project for the current we
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773605607
+
+**Completed-At:** 1773605764
