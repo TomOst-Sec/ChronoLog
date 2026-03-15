@@ -1,6 +1,6 @@
 # TASK-025: Cross-platform path handling and Windows compatibility
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** TASK-001
@@ -22,3 +22,6 @@ Ensure all file path handling works correctly on Windows, macOS, and Linux. GOAL
 - `Path.home()` works on all platforms
 - This is mostly a refactor — review existing code and update path handling
 - If paths already use pathlib, verify and add tests confirming cross-platform behavior
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773605895
