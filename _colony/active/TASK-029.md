@@ -1,6 +1,6 @@
 # TASK-029: Database backup and restore commands
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -23,3 +23,6 @@ Implement `chrono backup` and `chrono restore` for database backup. Since all da
 - Backup timestamp uses local time for readability
 - This is a simple file operation — no special SQLite handling needed
 - Consider using `sqlite3.backup()` API for a hot-copy approach
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773605926
