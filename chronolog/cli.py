@@ -233,6 +233,48 @@ def project_archive(name: str) -> None:
         sys.exit(1)
 
 
+@cli.group("db")
+def db_group() -> None:
+    """Database backup and restore."""
+
+
+@db_group.command("backup")
+@click.option("--output", "-o", default=None, type=click.Path(), help="Custom backup file path.")
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def db_backup(output: str | None, db: str | None) -> None:
+    """Create a database backup."""
+    from chronolog.backup import backup_db
+
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    output_path = Path(output) if output else None
+    result = backup_db(db_path, output_path)
+    console.print(f"[green]Backup created:[/green] {result}")
+
+
+@db_group.command("restore")
+@click.argument("backup_file", type=click.Path())
+@click.option("--yes", "-y", is_flag=True, help="Skip confirmation prompt.")
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def db_restore(backup_file: str, yes: bool, db: str | None) -> None:
+    """Restore the database from a backup file."""
+    from chronolog.backup import restore_db
+
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    backup_path = Path(backup_file)
+    if not yes:
+        if not click.confirm(f"Restore database from {backup_path}?"):
+            console.print("[yellow]Aborted.[/yellow]")
+            return
+    try:
+        restore_db(db_path, backup_path)
+        console.print(f"[green]Restored:[/green] database from {backup_path}")
+    except (RuntimeError, FileNotFoundError) as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        raise SystemExit(1)
+
+
 @cli.group()
 def config() -> None:
     """Manage ChronoLog configuration."""
