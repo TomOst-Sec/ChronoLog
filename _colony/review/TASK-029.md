@@ -1,6 +1,6 @@
 # TASK-029: Database backup and restore commands
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -26,3 +26,5 @@ Implement `chrono backup` and `chrono restore` for database backup. Since all da
 
 **Claimed-By:** alpha-3
 **Claimed-At:** 1773605926
+
+**Completed-At:** 1773606015
