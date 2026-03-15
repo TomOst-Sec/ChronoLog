@@ -1,6 +1,6 @@
 # TASK-023: BUG — Project.from_row() missing on Project dataclass
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P0
 **Depends-On:** none
@@ -31,3 +31,6 @@ Failing tests:
 ## Notes
 - Filed by bravo-2 during TASK-017 baseline test run
 - Root cause: TASK-004 (project CRUD) was merged but Project model lacks from_row
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773605787
