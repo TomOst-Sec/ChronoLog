@@ -1,6 +1,6 @@
 # TASK-028: Resume last timer command
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -24,3 +24,5 @@ Implement `chrono resume` — restart the most recently stopped timer with the s
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773605914
+
+**Completed-At:** 1773606009
