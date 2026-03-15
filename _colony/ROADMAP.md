@@ -1,49 +1,53 @@
 # ChronoLog Roadmap
 
 > Maintained by ATLAS. Updated every 30-minute cycle.
-> Last updated: 2026-03-15 cycle 4
+> Last updated: 2026-03-15 cycle 10
 
-## Current Milestone: M1 — Core Timer
+## Overview
+25 total tasks generated. All GOALS.md features covered (M1 + M2 + M3).
+305 tests passing across review branches (per beta-tester cycle 5).
 
-Goal: Implement Features 1 (start/stop timer), 2 (project management), and 9 (SQLite storage) from GOALS.md.
+## M1: Core Timer — 5 Done, 8 in Review
 
-## Current Sprint
+### Done
+TASK-001 (scaffolding), TASK-002 (models), TASK-003 (db), TASK-004 (project CRUD), TASK-005 (timer)
 
-### Foundation (P0)
-| Task | Title | Team | Priority | Status |
-|------|-------|------|----------|--------|
-| TASK-001 | Project scaffolding & package structure | alpha | P0 | **done** |
-| TASK-002 | Data models for entries and projects | bravo | P0 | **review** |
-| TASK-003 | SQLite database initialization & schema | alpha | P0 | **review** |
+### In Review (waiting on audit)
+TASK-006 (timer CLI), TASK-007 (project CLI), TASK-008 (utils), TASK-009 (list entries),
+TASK-010 (edit/delete), TASK-011 (config), TASK-012 (integration tests), TASK-013 (exceptions)
 
-### Core Features (P0/P1)
-| Task | Title | Team | Priority | Status |
-|------|-------|------|----------|--------|
-| TASK-004 | Project management CRUD operations | alpha | P1 | **active** (alpha-1) |
-| TASK-005 | Timer start/stop core logic | bravo | P0 | **active** (bravo-1) |
-| TASK-008 | Duration formatting & timezone utilities | alpha | P1 | **active** (alpha-3) |
+### Bug Fix
+TASK-022 (P0 Project.from_row bug) — in review
 
-### CLI & Display Layer (P1)
-| Task | Title | Team | Priority | Status |
-|------|-------|------|----------|--------|
-| TASK-006 | CLI commands for timer start/stop/status | bravo | P1 | queue |
-| TASK-007 | CLI commands for project management | alpha | P1 | queue |
-| TASK-009 | List recent time entries command | alpha | P1 | queue |
-| TASK-010 | Edit and delete time entries | bravo | P1 | queue |
+## M2: Reporting & Tags — In Progress
 
-### Config & Testing (P1)
-| Task | Title | Team | Priority | Status |
-|------|-------|------|----------|--------|
-| TASK-011 | Configuration system | alpha | P1 | queue |
-| TASK-012 | End-to-end integration tests | bravo | P1 | queue |
+### Active
+| Task | Title | Team |
+|------|-------|------|
+| TASK-016 | Weekly report | alpha |
+| TASK-017 | Date range report | bravo |
+| TASK-018 | CSV export | alpha |
 
-## Completed
-- TASK-001: Project scaffolding (merged by audit)
+### Done/Review
+TASK-014 (tagging core) — review, TASK-015 (daily report) — review
 
-## Upcoming
-- M1 task generation complete. 12 tasks cover all M1 features.
-- Next: M2 task generation once M1 tasks are mostly done/review.
+## Queued (6)
 
-## Future Milestones
-- **M2: Reporting & Tags** — Features 3, 4, 5, 6 (tags, daily/weekly/range reports, Rich output)
-- **M3: Polish** — Features 7, 8, 10 (CSV export)
+| Task | Title | Team | Priority |
+|------|-------|------|----------|
+| TASK-019 | Report formatting helpers | bravo | P2 |
+| TASK-020 | Test coverage to 80%+ | alpha | P2 |
+| TASK-021 | CLI help text polish | bravo | P2 |
+| TASK-023 | P0 bug duplicate (from_row) | alpha | P0 |
+| TASK-024 | Database indexing | alpha | P2 |
+| TASK-025 | Cross-platform paths | bravo | P2 |
+
+## Bottleneck
+**Audit review queue: 11 tasks.** This is the sole blocker for the colony.
+All dev work is progressing well. Beta-tester confirms all branches pass tests.
+
+## Summary
+- Tasks 001-013: M1 (Core Timer)
+- Tasks 014-019: M2 (Reports & Tags)
+- Tasks 020-025: Quality & Polish
+- Queue: 3 alpha, 3 bravo — healthy
