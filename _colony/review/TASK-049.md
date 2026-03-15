@@ -1,6 +1,6 @@
 # TASK-049: Add backup and restore CLI commands
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** none
@@ -27,3 +27,5 @@ Wire up `backup.backup_db()` and `backup.restore_db()` to CLI commands under a `
 
 **Claimed-By:** bravo-1
 **Claimed-At:** 1773608455
+
+**Completed-At:** 1773608563
