@@ -1,6 +1,6 @@
 # TASK-022: BUG — Project.from_row missing, 6 tests failing
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P0
 **Depends-On:** TASK-002, TASK-004
@@ -20,3 +20,5 @@
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773605693
+
+**Completed-At:** 1773605783
