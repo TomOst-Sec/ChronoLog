@@ -1,6 +1,6 @@
 # TASK-047: Add edit and delete entry CLI commands
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** none
@@ -28,3 +28,5 @@ Wire up the existing `edit_entry()` and `delete_entry()` functions from `core.py
 
 **Claimed-By:** bravo-1
 **Claimed-At:** 1773608322
+
+**Completed-At:** 1773608429
