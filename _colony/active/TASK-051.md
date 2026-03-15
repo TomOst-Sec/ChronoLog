@@ -1,6 +1,6 @@
 # TASK-051: Add --db option to project CLI subcommands
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** none
@@ -32,3 +32,6 @@ chrono stop --db /tmp/test.db
 chrono project create backend --db /tmp/test.db  # Error: No such option: --db
 chrono project list --db /tmp/test.db             # Error: No such option: --db
 ```
+
+**Claimed-By:** bravo-2
+**Claimed-At:** 1773608713
