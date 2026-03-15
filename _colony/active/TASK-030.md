@@ -1,6 +1,6 @@
 # TASK-030: Cancel running timer command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -21,3 +21,6 @@ Implement `chrono cancel` — discard the currently running timer without saving
 - DELETE FROM entries WHERE end_time IS NULL
 - Should only ever be 0 or 1 active timers — assert this
 - Show elapsed time before deletion so user knows what they're discarding
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773605949
