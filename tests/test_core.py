@@ -14,6 +14,7 @@ from chronolog.core import (
     get_project,
     list_projects,
     report_daily,
+    report_weekly,
     start_timer,
     stop_timer,
 )
@@ -277,3 +278,91 @@ class TestDeleteEntry:
         delete_entry(db, entry_id=entry.id)
         with pytest.raises(EntryNotFoundError):
             edit_entry(db, entry_id=entry.id)
+
+
+class TestReportWeekly:
+    """Tests for report_weekly()."""
+
+    def _get_monday(self) -> date:
+        """Return the Monday of the current week."""
+        today = date.today()
+        return today - timedelta(days=today.weekday())
+
+    def test_returns_per_project_summaries(self, db: Path) -> None:
+        """report_weekly returns summaries with project, hours, percentage."""
+        monday = self._get_monday()
+        start1 = datetime(monday.year, monday.month, monday.day, 9, 0, tzinfo=timezone.utc)
+        end1 = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "work on general", "general", start1, end1)
+
+        create_project(db, "webapp")
+        start2 = datetime(monday.year, monday.month, monday.day, 13, 0, tzinfo=timezone.utc)
+        end2 = datetime(monday.year, monday.month, monday.day, 14, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "work on webapp", "webapp", start2, end2)
+
+        summaries = report_weekly(db)
+        assert len(summaries) == 2
+        for s in summaries:
+            assert "project" in s
+            assert "hours" in s
+            assert "percentage" in s
+
+    def test_hours_calculated_correctly(self, db: Path) -> None:
+        """Hours should be computed from entry durations."""
+        monday = self._get_monday()
+        start = datetime(monday.year, monday.month, monday.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(monday.year, monday.month, monday.day, 11, 30, tzinfo=timezone.utc)
+        _insert_entry(db, "morning work", "general", start, end)
+
+        summaries = report_weekly(db)
+        assert len(summaries) == 1
+        assert summaries[0]["project"] == "general"
+        assert summaries[0]["hours"] == pytest.approx(2.5, abs=0.01)
+
+    def test_percentage_calculated_correctly(self, db: Path) -> None:
+        """Percentage = project hours / total hours * 100."""
+        monday = self._get_monday()
+        # general: 3 hours
+        start1 = datetime(monday.year, monday.month, monday.day, 9, 0, tzinfo=timezone.utc)
+        end1 = datetime(monday.year, monday.month, monday.day, 12, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "general work", "general", start1, end1)
+
+        # webapp: 1 hour
+        create_project(db, "webapp")
+        start2 = datetime(monday.year, monday.month, monday.day, 13, 0, tzinfo=timezone.utc)
+        end2 = datetime(monday.year, monday.month, monday.day, 14, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "webapp work", "webapp", start2, end2)
+
+        summaries = report_weekly(db)
+        by_project = {s["project"]: s for s in summaries}
+        assert by_project["general"]["percentage"] == pytest.approx(75.0, abs=0.1)
+        assert by_project["webapp"]["percentage"] == pytest.approx(25.0, abs=0.1)
+
+    def test_returns_empty_list_for_empty_week(self, db: Path) -> None:
+        """Empty week returns empty list."""
+        summaries = report_weekly(db)
+        assert summaries == []
+
+    def test_excludes_entries_outside_current_week(self, db: Path) -> None:
+        """Entries from previous weeks are excluded."""
+        monday = self._get_monday()
+        last_week = monday - timedelta(days=7)
+        start = datetime(last_week.year, last_week.month, last_week.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(last_week.year, last_week.month, last_week.day, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "old work", "general", start, end)
+
+        summaries = report_weekly(db)
+        assert summaries == []
+
+    def test_excludes_running_entries(self, db: Path) -> None:
+        """Running entries (no end_time) are excluded."""
+        monday = self._get_monday()
+        start = datetime(monday.year, monday.month, monday.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(monday.year, monday.month, monday.day, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "completed", "general", start, end)
+        start_timer(db, description="running")
+
+        summaries = report_weekly(db)
+        assert len(summaries) == 1
+        assert summaries[0]["hours"] == pytest.approx(1.0, abs=0.01)
+
