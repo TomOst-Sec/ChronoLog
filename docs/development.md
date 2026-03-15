@@ -71,6 +71,14 @@ pyproject.toml      # Project metadata and dependencies
 - `stop_timer(db_path)` -- sets `end_time` on active entry
 - `get_active_timer(db_path)` -- returns running entry or None
 
+**Entry management:**
+- `list_entries(db_path, limit)` -- recent entries ordered by start_time desc
+- `edit_entry(db_path, entry_id, description, project, tags)` -- update specific fields on an entry
+- `delete_entry(db_path, entry_id)` -- remove an entry by ID
+
+**Tags:**
+- `list_tags(db_path)` -- all tags with total minutes and entry count
+
 **Project management:**
 - `create_project(db_path, name)` -- creates project, validates name (alphanumeric + hyphens, 1-50 chars)
 - `list_projects(db_path, include_archived)` -- lists projects, optionally including archived
