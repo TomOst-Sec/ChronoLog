@@ -1,6 +1,6 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 2
+> Last updated: 2026-03-15 — Cycle 3
 
 ## Current Priority: M1 — Core Timer
 
@@ -30,8 +30,14 @@ We are at **day zero**. No application code exists. ATLAS must generate foundati
 - Follow the tech stack exactly: Click, Rich, pytest, sqlite3, Python 3.10+.
 - All times stored in UTC, displayed in local timezone from the start.
 
+## Status (Cycle 3)
+- ATLAS has generated 3 tasks (TASK-001, 002, 003). Good structure, clear acceptance criteria.
+- No dev agents have claimed tasks yet — alpha-1/2/3 should pick up TASK-001 immediately.
+- Bravo team is blocked: both TASK-002 depends on TASK-001. Bravo is idle until scaffolding lands.
+
 ## Blockers
-- **CRITICAL**: No agents have started yet. Task queue is empty. ATLAS must run to unblock the entire colony. Dev agents are idle with nothing to claim.
+- **Bravo blocked**: TASK-002 (their only task) depends on TASK-001. Need scaffolding merged first.
+- **Queue depth**: Only 3 tasks total. ATLAS must generate more M1 tasks (start/stop timer, project CRUD, status command) so dev teams aren't starved once TASK-001 lands.
 
 ## Strategic Notes
 - M1 is: start/stop timer, projects, SQLite storage. That's it.
