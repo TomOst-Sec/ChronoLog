@@ -37,6 +37,7 @@ chronolog/
   core.py           # Timer + project business logic
   db.py             # SQLite connection, schema init, get_db_path
   exceptions.py     # Custom exception hierarchy (ChronoLogError base)
+  export.py         # CSV export for date-range entries
   models.py         # TimeEntry and Project dataclasses
   utils.py          # Duration formatting, timezone display (stub)
 tests/

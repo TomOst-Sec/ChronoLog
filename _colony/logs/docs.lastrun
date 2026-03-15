@@ -1,1 +1,1 @@
-2026-03-15T22:45:00Z cycle=8 status=complete notes="Added edit_entry/delete_entry/list_tags/list_entries to dev guide. 86 tests. 16 tasks done."
+2026-03-15T22:50:00Z cycle=9 status=complete notes="Added export.py docs. 21 tasks done. M2 features landing (tags, reports, export core). CLI not yet wired for M2."
