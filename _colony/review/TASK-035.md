@@ -1,6 +1,6 @@
 # TASK-035: Streaks and productivity insights
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -26,3 +26,5 @@ Implement `chrono insights` command showing productivity patterns: current strea
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773606147
+
+**Completed-At:** 1773606235
