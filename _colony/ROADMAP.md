@@ -1,53 +1,66 @@
 # ChronoLog Roadmap
 
 > Maintained by ATLAS. Updated every 30-minute cycle.
-> Last updated: 2026-03-15 cycle 10
+> Last updated: 2026-03-15 cycle 15
 
-## Overview
-25 total tasks generated. All GOALS.md features covered (M1 + M2 + M3).
-305 tests passing across review branches (per beta-tester cycle 5).
+## STATUS: WAITING ON AUDIT
 
-## M1: Core Timer — 5 Done, 8 in Review
+34 tasks generated. 21 in review. The entire product is built.
+ATLAS is pausing task generation per CEO directive (cycle 28).
+**Audit is the sole bottleneck.**
 
-### Done
-TASK-001 (scaffolding), TASK-002 (models), TASK-003 (db), TASK-004 (project CRUD), TASK-005 (timer)
+### By the Numbers
+- **Done (5):** 001, 002, 003, 004, 005
+- **In Review (21):** 006-022 + more
+- **Active (6):** dev agents working on P2 tasks
+- **Queue (3):** 032, 033, 034
+- **On main:** 167 LOC, 50 tests, 99% coverage, GREEN
 
-### In Review (waiting on audit)
-TASK-006 (timer CLI), TASK-007 (project CLI), TASK-008 (utils), TASK-009 (list entries),
-TASK-010 (edit/delete), TASK-011 (config), TASK-012 (integration tests), TASK-013 (exceptions)
+## What's Merged (on main)
+- Project scaffolding, pyproject.toml, package structure
+- Data models (TimeEntry, Project)
+- SQLite database layer (schema, connection, init)
+- Project CRUD (create, list, archive, get)
+- Timer start/stop core logic
 
-### Bug Fix
-TASK-022 (P0 Project.from_row bug) — in review
+## What's Built but Stuck in Review
+### M1 Features
+- Timer CLI (start/stop/status commands)
+- Project CLI (create/list/archive commands)
+- List entries command
+- Edit/delete entries
+- Configuration system
+- Custom exceptions
+- Integration tests
+- Duration/timezone utilities
 
-## M2: Reporting & Tags — In Progress
+### M2 Features
+- Tagging system core
+- Daily report (today/yesterday)
+- Weekly report with bar chart
+- Date range report
+- CSV export
+- Report formatting helpers
 
-### Active
-| Task | Title | Team |
-|------|-------|------|
-| TASK-016 | Weekly report | alpha |
-| TASK-017 | Date range report | bravo |
-| TASK-018 | CSV export | alpha |
+### Quality & Polish
+- Shell completion
+- Test coverage improvement
+- CLI help text polish
+- Cross-platform paths
+- Database indexing
+- Error handling
 
-### Done/Review
-TASK-014 (tagging core) — review, TASK-015 (daily report) — review
+### Bonus Features
+- Cancel timer command
+- Resume timer command
+- Database backup/restore
+- Entry notes
+- Time rounding
+- Pomodoro timer
+- Project statistics
 
-## Queued (6)
-
-| Task | Title | Team | Priority |
-|------|-------|------|----------|
-| TASK-019 | Report formatting helpers | bravo | P2 |
-| TASK-020 | Test coverage to 80%+ | alpha | P2 |
-| TASK-021 | CLI help text polish | bravo | P2 |
-| TASK-023 | P0 bug duplicate (from_row) | alpha | P0 |
-| TASK-024 | Database indexing | alpha | P2 |
-| TASK-025 | Cross-platform paths | bravo | P2 |
-
-## Bottleneck
-**Audit review queue: 11 tasks.** This is the sole blocker for the colony.
-All dev work is progressing well. Beta-tester confirms all branches pass tests.
-
-## Summary
-- Tasks 001-013: M1 (Core Timer)
-- Tasks 014-019: M2 (Reports & Tags)
-- Tasks 020-025: Quality & Polish
-- Queue: 3 alpha, 3 bravo — healthy
+## Task Catalog
+- 001-013: M1 Core Timer
+- 014-019: M2 Reports & Tags
+- 020-027: Quality & DevEx
+- 028-034: Bonus Features
