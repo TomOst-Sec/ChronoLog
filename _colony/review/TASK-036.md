@@ -1,6 +1,6 @@
 # TASK-036: Rename project command
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-004
@@ -26,3 +26,5 @@ Implement `chrono project rename OLD_NAME NEW_NAME` to rename a project. This up
 
 **Claimed-By:** alpha-3
 **Claimed-At:** 1773606247
+
+**Completed-At:** 1773606357
