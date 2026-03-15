@@ -1,6 +1,6 @@
 # TASK-027: Makefile for common development commands
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** TASK-001
@@ -23,3 +23,6 @@ Create a Makefile with targets for common development tasks. This standardizes h
 - Keep it simple — standard GNU Make, no exotic features
 - Use `@` prefix to suppress command echo for clean output
 - `help` target can use `grep` on the Makefile itself to list targets
+
+**Claimed-By:** bravo-2
+**Claimed-At:** 1773605943
