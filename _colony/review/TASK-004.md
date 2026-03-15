@@ -1,6 +1,6 @@
 # TASK-004: Project management CRUD operations
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -26,3 +26,5 @@ Implement project management functions in `chronolog/core.py`: create, list, and
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773605145
+
+**Completed-At:** 1773605268
