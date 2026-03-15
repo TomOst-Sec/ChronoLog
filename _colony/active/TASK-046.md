@@ -1,6 +1,6 @@
 # TASK-046: Add tags CLI command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** none
@@ -21,3 +21,6 @@ Implement `chrono tags` CLI command that lists all used tags with total time per
 - `core.list_tags()` returns `list[dict]` with keys: tag, total_minutes, entry_count
 - Format minutes nicely: if >= 60, show "Xh Ym", else show "Xm"
 - Follow the same CLI patterns used in other commands (console, Rich tables)
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773608266
