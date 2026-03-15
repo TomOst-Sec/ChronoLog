@@ -1,6 +1,6 @@
 # TASK-002: Data models for entries and projects
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P0
 **Depends-On:** TASK-001
@@ -23,3 +23,6 @@ Define the core data models in `chronolog/models.py`. These are plain Python dat
 - Use `dataclasses` from stdlib, not pydantic
 - Tags are stored as comma-separated string in DB but list[str] in Python
 - Times must be timezone-aware UTC datetimes (use `datetime.timezone.utc`)
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773605074
