@@ -1,6 +1,6 @@
 # TASK-008: Duration formatting and timezone display utilities
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001
@@ -27,3 +27,5 @@ Implement utility functions in `chronolog/utils.py` for formatting durations and
 
 **Claimed-By:** alpha-3
 **Claimed-At:** 1773605224
+
+**Completed-At:** 1773605305
