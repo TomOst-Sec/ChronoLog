@@ -1,6 +1,6 @@
 # TASK-015: Daily report — today and yesterday
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -27,3 +27,5 @@ Implement `chrono report today` and `chrono report yesterday`. Shows all time en
 
 **Claimed-By:** bravo-1
 **Claimed-At:** 1773605603
+
+**Completed-At:** 1773605744
