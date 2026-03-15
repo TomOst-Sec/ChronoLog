@@ -311,6 +311,34 @@ def delete_entry(db_path: Path, entry_id: int) -> None:
         conn.close()
 
 
+
+def list_tags(db_path: Path) -> list[dict]:
+    """List all tags with total time and entry count."""
+    init_db(db_path)
+    conn = get_connection(db_path)
+    try:
+        rows = conn.execute(
+            'SELECT tags, start_time, end_time FROM entries WHERE end_time IS NOT NULL'
+        ).fetchall()
+        tag_stats: dict[str, dict] = {}
+        for row in rows:
+            tags_raw = row['tags']
+            if not tags_raw:
+                continue
+            tags = [t.strip() for t in tags_raw.split(',') if t.strip()]
+            start = datetime.fromisoformat(row['start_time'])
+            end = datetime.fromisoformat(row['end_time'])
+            minutes = (end - start).total_seconds() / 60.0
+            for tag in tags:
+                if tag not in tag_stats:
+                    tag_stats[tag] = {'tag': tag, 'total_minutes': 0.0, 'entry_count': 0}
+                tag_stats[tag]['total_minutes'] += minutes
+                tag_stats[tag]['entry_count'] += 1
+        return sorted(tag_stats.values(), key=lambda x: x['total_minutes'], reverse=True)
+    finally:
+        conn.close()
+
+
 def list_entries(db_path: Path, limit: int = 10) -> list[TimeEntry]:
     """Return recent time entries ordered by start_time descending.
 
