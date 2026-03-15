@@ -1,6 +1,6 @@
 # TASK-003: SQLite database initialization and schema
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P0
 **Depends-On:** TASK-001
@@ -26,3 +26,5 @@ Implement the SQLite database layer in `chronolog/core.py` (or a new `chronolog/
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773605040
+
+**Completed-At:** 1773605166
