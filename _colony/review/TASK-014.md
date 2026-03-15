@@ -1,6 +1,6 @@
 # TASK-014: Tagging system — list all tags with time totals
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -23,3 +23,5 @@ Implement `chrono tags` command showing all used tags with total time per tag. T
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773605553
+
+**Completed-At:** 1773605669
