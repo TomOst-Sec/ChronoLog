@@ -1,6 +1,6 @@
 # TASK-046: Add tags CLI command
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** none
@@ -24,3 +24,5 @@ Implement `chrono tags` CLI command that lists all used tags with total time per
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773608266
+
+**Completed-At:** 1773608402
