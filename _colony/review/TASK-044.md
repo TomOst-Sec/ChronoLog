@@ -1,6 +1,6 @@
 # TASK-044: Add weekly report core logic and CLI command
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-043
@@ -27,3 +27,5 @@ The `display.py` module has `create_summary_table()` which renders project/hours
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773608595
+
+**Completed-At:** 1773608768
