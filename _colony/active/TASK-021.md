@@ -1,6 +1,6 @@
 # TASK-021: CLI help text and user experience polish
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** TASK-001
@@ -22,3 +22,6 @@ Ensure all CLI commands have clear, helpful `--help` output and consistent error
 - Use Click's `help` parameter on `@click.command()` and `@click.option()`
 - Use Rich.Console for colored error output
 - Keep help text concise — one line per command in the group listing
+
+**Claimed-By:** bravo-2
+**Claimed-At:** 1773605842
