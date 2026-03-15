@@ -1,6 +1,6 @@
 # TASK-011: Configuration system
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001
@@ -24,3 +24,6 @@ Implement the ChronoLog configuration system. Config is stored in `~/.chronolog/
 - Config file should be auto-created with defaults on first read
 - Only support string values for now (no nested config)
 - Valid keys: `default_project` (can add more later)
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773605339
