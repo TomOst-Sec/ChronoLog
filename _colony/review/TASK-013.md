@@ -1,6 +1,6 @@
 # TASK-013: Error handling and custom exceptions
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001
@@ -30,3 +30,5 @@ Define custom exception classes for ChronoLog and ensure all core functions rais
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773605417
+
+**Completed-At:** 1773605512
