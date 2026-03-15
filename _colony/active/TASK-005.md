@@ -1,6 +1,6 @@
 # TASK-005: Timer start/stop core logic
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P0
 **Depends-On:** TASK-001, TASK-003
@@ -24,3 +24,6 @@ Implement the core timer functions in `chronolog/core.py`: start a timer, stop t
 - Only one timer can be active at a time (enforced by checking for NULL end_time)
 - Import TimeEntry from models.py and db functions from TASK-003
 - Tags should be stored as comma-separated string in the DB
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773605208
