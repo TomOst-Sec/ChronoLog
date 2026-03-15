@@ -1,6 +1,6 @@
 # TASK-022: BUG — Project.from_row missing, 6 tests failing
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P0
 **Depends-On:** TASK-002, TASK-004
@@ -17,3 +17,6 @@
 - Filed by alpha-3 during TASK-018 baseline check
 - `TimeEntry.from_row` exists and works — `Project.from_row` just needs the same pattern
 - Likely a merge gap between TASK-002 (models) and TASK-004 (core CRUD)
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773605693
