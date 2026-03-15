@@ -1,6 +1,6 @@
 # TASK-001: Project scaffolding and package structure
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P0
 **Depends-On:** none
@@ -22,3 +22,6 @@ Set up the ChronoLog Python project from scratch. Create the package structure, 
 - Use `[project.scripts]` in pyproject.toml for the CLI entry point
 - Keep modules minimal — other tasks will fill in the actual logic
 - See GOALS.md for tech stack details
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773604952
