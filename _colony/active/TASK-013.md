@@ -1,6 +1,6 @@
 # TASK-013: Error handling and custom exceptions
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001
@@ -27,3 +27,6 @@ Define custom exception classes for ChronoLog and ensure all core functions rais
 - Keep exceptions simple — inherit from `ChronoLogError` which inherits from `Exception`
 - Each exception class needs just `__init__(self, message: str)` calling `super().__init__(message)`
 - Update existing core.py code to use new exceptions (coordinate with whatever is merged)
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773605417
