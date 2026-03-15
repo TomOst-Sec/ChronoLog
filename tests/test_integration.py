@@ -8,6 +8,11 @@ from click.testing import CliRunner
 from chronolog.cli import cli
 from chronolog.core import get_active_timer, start_timer, stop_timer
 from chronolog.db import get_connection, init_db
+from chronolog.exceptions import (
+    NoActiveTimerError,
+    ProjectNotFoundError,
+    TimerAlreadyRunningError,
+)
 
 
 @pytest.fixture
@@ -107,17 +112,17 @@ class TestErrorCases:
     def test_start_while_running_raises(self, db: Path) -> None:
         """Cannot start a second timer while one is active."""
         start_timer(db, description="first")
-        with pytest.raises(RuntimeError, match="already running"):
+        with pytest.raises(TimerAlreadyRunningError):
             start_timer(db, description="second")
 
     def test_stop_while_idle_raises(self, db: Path) -> None:
         """Cannot stop when no timer is running."""
-        with pytest.raises(RuntimeError, match="No timer is currently running"):
+        with pytest.raises(NoActiveTimerError):
             stop_timer(db)
 
     def test_start_with_nonexistent_project_raises(self, db: Path) -> None:
         """Cannot start a timer with a project that doesn't exist."""
-        with pytest.raises(RuntimeError, match="No such project"):
+        with pytest.raises(ProjectNotFoundError):
             start_timer(db, description="bad project", project="nonexistent")
 
 

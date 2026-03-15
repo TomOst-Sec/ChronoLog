@@ -26,6 +26,7 @@ from chronolog.core import (
 )
 from chronolog.db import get_db_path, init_db
 from chronolog.display import add_total_row, create_entries_table
+from chronolog.exceptions import ChronoLogError
 
 console = Console()
 
@@ -55,8 +56,8 @@ def start(description: str, project: str, tags: str, db: str | None) -> None:
         console.print(f"  Project: {entry.project}")
         if entry.tags:
             console.print(f"  Tags: {', '.join(entry.tags)}")
-    except RuntimeError as exc:
-        console.print(f"[red]Error:[/red] {exc}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         raise SystemExit(1)
 
 
@@ -74,8 +75,8 @@ def stop(db: str | None) -> None:
             console.print(f"  Duration: {entry.duration_minutes:.1f} minutes")
         if entry.tags:
             console.print(f"  Tags: {', '.join(entry.tags)}")
-    except RuntimeError as exc:
-        console.print("[red]Error:[/red] No timer is currently running")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         raise SystemExit(1)
 
 
@@ -119,8 +120,8 @@ def edit(entry_id: int, description: str | None, project: str | None, tags: str 
         console.print(f"  Project: {entry.project}")
         if entry.tags:
             console.print(f"  Tags: {', '.join(entry.tags)}")
-    except RuntimeError as exc:
-        console.print(f"[red]Error:[/red] {exc}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         raise SystemExit(1)
 
 
@@ -139,8 +140,8 @@ def delete(entry_id: int, yes: bool, db: str | None) -> None:
     try:
         delete_entry(db_path, entry_id)
         console.print(f"[green]Deleted:[/green] entry {entry_id}")
-    except RuntimeError as exc:
-        console.print(f"[red]Error:[/red] {exc}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         raise SystemExit(1)
 
 
@@ -196,8 +197,8 @@ def project_create(name: str) -> None:
     try:
         proj = create_project(db_path, name)
         console.print(f"[green]Created project '{proj.name}'.[/green]")
-    except ValueError as e:
-        console.print(f"[red]Error:[/red] {e}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         sys.exit(1)
 
 
@@ -228,8 +229,8 @@ def project_archive(name: str) -> None:
     try:
         archive_project(db_path, name)
         console.print(f"[yellow]Archived project '{name}'.[/yellow]")
-    except ValueError as e:
-        console.print(f"[red]Error:[/red] {e}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         sys.exit(1)
 
 
@@ -270,8 +271,9 @@ def db_restore(backup_file: str, yes: bool, db: str | None) -> None:
     try:
         restore_db(db_path, backup_path)
         console.print(f"[green]Restored:[/green] database from {backup_path}")
-    except (RuntimeError, FileNotFoundError) as exc:
-        console.print(f"[red]Error:[/red] {exc}")
+    except (ChronoLogError, RuntimeError, FileNotFoundError) as exc:
+        msg = exc.message if isinstance(exc, ChronoLogError) else str(exc)
+        console.print(f"[red]Error:[/red] {msg}")
         raise SystemExit(1)
 
 
