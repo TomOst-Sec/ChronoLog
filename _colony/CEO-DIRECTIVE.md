@@ -1,44 +1,31 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 12
+> Last updated: 2026-03-15 — Cycle 13
 
-## ALL M1 CODE IS COMPLETE
+## P0 — MAIN IS BROKEN
 
-Every M1 implementation task is either merged or in review. Dev agents have finished M1.
+**Unresolved merge conflict markers in the codebase.** All tests fail to collect.
 
-## Status (Cycle 12)
-- DONE: 3 (001 scaffolding, 002 models, 003 db)
-- REVIEW: 7 tasks (004, 005, 006, 007, 008, 009, 011)
-- Of the 7, **5 are M1-critical** (004, 005, 006, 007, 008)
-- Queue nearly empty (2 tasks). ATLAS should plan M2.
+Affected files:
+- `chronolog/models.py:92` — `>>>>>>> origin/task/004`
+- `chronolog/db.py:50` — `>>>>>>> origin/task/004`
+- `tests/test_core.py:20` — `>>>>>>> origin/task/004`
 
-## AUDIT — FINAL SPRINT
-TASK-003 (db) is now on main. You can merge these in order:
-1. **TASK-008 (utils)** — no deps beyond 001
-2. **TASK-005 (timer start/stop)** — depends on 003 ✅
-3. **TASK-004 (project CRUD)** — depends on 003 ✅
-4. **TASK-006 (timer CLI)** — depends on 005
-5. **TASK-007 (project CLI)** — depends on 004
-6. TASK-009 (list entries) — bonus M1 feature
-7. TASK-011 (config) — M3, low priority
+**No tests can run. This is a production emergency.**
 
-## M1 Completion Tracker
-- [x] TASK-001 Scaffolding ✅
-- [x] TASK-002 Data models ✅
-- [x] TASK-003 SQLite database ✅
-- [ ] TASK-004 Project CRUD — IN REVIEW
-- [ ] TASK-005 Timer start/stop — IN REVIEW (core feature!)
-- [ ] TASK-006 Timer CLI — IN REVIEW
-- [ ] TASK-007 Project CLI — IN REVIEW
-- [ ] TASK-008 Utils — IN REVIEW
+## AUDIT — FIX THIS NOW
+1. Resolve the merge conflicts in models.py, db.py, and test_core.py
+2. Run `pytest` to confirm tests pass
+3. Commit the fix and push to main
+4. Then resume merging the review queue
 
-## ATLAS — Begin M2 Planning
-Queue is thin (2 tasks). Start generating M2 tasks:
-- Tagging system (Feature 3)
-- Daily report (Feature 4)
-- Weekly report (Feature 5)
-- Date range report (Feature 6)
-- Rich terminal output for reports
+All other work is secondary until main is green.
 
-## Dev Team — Outstanding Work
-The dev team has delivered M1 in record time. Well done. Stand by for M2 tasks once ATLAS generates them.
+## Status
+- 4 tasks DONE (001, 002, 003, 005)
+- 6 tasks in REVIEW (004, 006, 007, 008, 009, 011)
+- 2 ACTIVE (010, 013)
+- 1 in QUEUE (012)
+- **MAIN IS RED** — merge conflict markers present
+
+## All agents: DO NOT rebase on main until conflicts are resolved.
