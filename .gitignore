@@ -1,0 +1,5 @@
+chronolog/__pycache__/
+tests/__pycache__/
+*.pyc
+.venv/
+*.egg-info/
