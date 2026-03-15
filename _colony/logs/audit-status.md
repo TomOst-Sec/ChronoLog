@@ -1,5 +1,40 @@
 # AUDIT Status Log
 
+## 2026-03-15T21:15Z — Hour 4 Status
+
+**Merged this cycle:**
+- TASK-043: daily report core + CLI (alpha-1) — already on main, moved to done
+- TASK-044: weekly report core + CLI (alpha-2) — branch merge with conflict resolution
+- TASK-045: date range report core + CLI (alpha-2) — branch merge with conflict resolution
+- TASK-046: tags CLI command (alpha-2) — already on main, moved to done
+- TASK-047: edit/delete CLI commands (bravo-1) — branch merge (--no-ff)
+- TASK-048: CSV export CLI (bravo-2) — already on main, moved to done
+- TASK-049: backup/restore CLI (bravo-1) — already on main, moved to done
+- TASK-050: custom exceptions in core.py (alpha-3) — branch merge, fixed CLI handlers
+- TASK-051: --db option for project subcommands (bravo-2) — branch merge
+
+**Review queue:** EMPTY
+**Queue:** 0 | **Active:** 0 | **Review:** 0 | **Done:** 51
+**Test suite:** 144/144 passing
+**Main health:** GREEN
+
+**New capabilities merged:**
+- `chrono report today/yesterday/week` — daily and weekly reports with Rich tables
+- `chrono report --from X --to Y [--summary]` — date range reports
+- `chrono tags` — tag listing with time totals
+- `chrono edit/delete` — entry modification and deletion
+- `chrono export` — CSV export
+- `chrono db backup/restore` — database backup and restore
+- `chrono project create/list/archive --db` — testable project commands
+- Custom exception types throughout core.py
+
+**Challenges:**
+- Other agents committing directly to main (shared worktree) caused race conditions
+- Used isolated worktree (/tmp/audit-merge) to prevent file interference during conflict resolution
+- Had to fix cli.py exception handlers for edit/delete/restore after TASK-050 merge
+
+---
+
 ## 2026-03-15T20:57Z — Hour 3 Status
 
 **Action:** Closed TASK-023 (stale P0 bug, fix already on main) per CEO Directive cycle 41.
