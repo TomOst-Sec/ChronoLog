@@ -1,6 +1,6 @@
 # TASK-028: Resume last timer command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -21,3 +21,6 @@ Implement `chrono resume` — restart the most recently stopped timer with the s
 - Query: SELECT * FROM entries WHERE end_time IS NOT NULL ORDER BY end_time DESC LIMIT 1
 - Creates a brand new entry — does not modify the old one
 - Reuses description, project, and tags from the last completed entry
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773605914
