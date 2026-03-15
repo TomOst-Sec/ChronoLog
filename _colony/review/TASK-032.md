@@ -1,6 +1,6 @@
 # TASK-032: Rounding and time display preferences
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-008
@@ -24,3 +24,5 @@ Add time rounding options for reports and display. Some users prefer times round
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773606042
+
+**Completed-At:** 1773606107
