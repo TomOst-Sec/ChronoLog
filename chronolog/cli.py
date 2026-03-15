@@ -17,6 +17,7 @@ from chronolog.core import (
     get_active_timer,
     list_entries,
     list_projects,
+    list_tags,
     report_daily,
     start_timer,
     stop_timer,
@@ -261,4 +262,83 @@ def report_yesterday(db: str | None) -> None:
     table = create_entries_table(entries)
     total_minutes = sum(e.duration_minutes or 0.0 for e in entries)
     add_total_row(table, total_minutes)
+    console.print(table)
+
+
+@cli.command("export")
+@click.option("--from", "from_date", required=True, help="Start date (YYYY-MM-DD).")
+@click.option("--to", "to_date", required=True, help="End date (YYYY-MM-DD).")
+@click.option("--output", "-o", default=None, type=click.Path(), help="Output file path. Defaults to stdout.")
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def export_cmd(from_date: str, to_date: str, output: str | None, db: str | None) -> None:
+    """Export time entries to CSV."""
+    import re
+    from chronolog.export import export_entries_csv
+
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+
+    date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    for label, value in [("--from", from_date), ("--to", to_date)]:
+        if not date_pattern.match(value):
+            console.print(f"[red]Error:[/red] Invalid date format for {label}: '{value}'. Use YYYY-MM-DD.")
+            raise SystemExit(1)
+
+    output_path = Path(output) if output else None
+    export_entries_csv(db_path, from_date, to_date, output_path)
+
+    from chronolog.db import get_connection
+    conn = get_connection(db_path)
+    try:
+        count = conn.execute(
+            """SELECT COUNT(*) FROM entries
+               WHERE end_time IS NOT NULL
+                 AND date(start_time) >= date(?)
+                 AND date(start_time) <= date(?)""",
+            (from_date, to_date),
+        ).fetchone()[0]
+    finally:
+        conn.close()
+
+    dest = str(output_path) if output_path else "stdout"
+    console.print(f"[green]Exported {count} entries to {dest}[/green]")
+
+
+def _format_minutes(total_minutes: float) -> str:
+    """Format minutes as 'Xh Ym' or 'Xm'.
+
+    Args:
+        total_minutes: Total minutes to format.
+
+    Returns:
+        A human-readable time string.
+    """
+    minutes = int(total_minutes)
+    if minutes >= 60:
+        hours = minutes // 60
+        remaining = minutes % 60
+        return f"{hours}h {remaining}m"
+    return f"{minutes}m"
+
+
+@cli.command("tags")
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def tags_cmd(db: str | None) -> None:
+    """List all tags with total time."""
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    tag_data = list_tags(db_path)
+    if not tag_data:
+        console.print("[dim]No tags found[/dim]")
+        return
+    table = Table(title="Tags")
+    table.add_column("Tag", style="cyan")
+    table.add_column("Total Time", justify="right")
+    table.add_column("Entries", justify="right")
+    for entry in tag_data:
+        table.add_row(
+            entry["tag"],
+            _format_minutes(entry["total_minutes"]),
+            str(entry["entry_count"]),
+        )
     console.print(table)

@@ -106,3 +106,118 @@ class TestReportYesterdayCLI:
         result = runner.invoke(cli, ["report", "yesterday", "--db", str(db)])
         assert result.exit_code == 0
         assert "No entries for" in result.output
+
+
+class TestTagsCommand:
+    """Tests for chrono tags CLI command."""
+
+    def test_tags_displays_table_with_tag_data(self, db: Path) -> None:
+        """chrono tags shows a Rich table with tag, total time, entries."""
+        now = datetime.now(timezone.utc)
+        conn = get_connection(db)
+        try:
+            conn.execute(
+                "INSERT INTO entries (description, project, tags, start_time, end_time, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                ("task1", "general", "bug,urgent",
+                 (now - timedelta(hours=2, minutes=30)).isoformat(),
+                 now.isoformat(), now.isoformat()),
+            )
+            conn.execute(
+                "INSERT INTO entries (description, project, tags, start_time, end_time, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                ("task2", "general", "bug",
+                 (now - timedelta(minutes=45)).isoformat(),
+                 now.isoformat(), now.isoformat()),
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["tags", "--db", str(db)])
+        assert result.exit_code == 0
+        assert "bug" in result.output
+        assert "urgent" in result.output
+        assert "Tag" in result.output
+        assert "Total Time" in result.output
+        assert "Entries" in result.output
+
+    def test_tags_formats_time_as_hours_and_minutes(self, db: Path) -> None:
+        """Tags with >= 60 min show 'Xh Ym' format."""
+        now = datetime.now(timezone.utc)
+        conn = get_connection(db)
+        try:
+            conn.execute(
+                "INSERT INTO entries (description, project, tags, start_time, end_time, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                ("long task", "general", "dev",
+                 (now - timedelta(hours=2, minutes=30)).isoformat(),
+                 now.isoformat(), now.isoformat()),
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["tags", "--db", str(db)])
+        assert result.exit_code == 0
+        assert "2h 30m" in result.output
+
+    def test_tags_formats_short_time_as_minutes(self, db: Path) -> None:
+        """Tags with < 60 min show 'Xm' format."""
+        now = datetime.now(timezone.utc)
+        conn = get_connection(db)
+        try:
+            conn.execute(
+                "INSERT INTO entries (description, project, tags, start_time, end_time, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                ("short task", "general", "quick",
+                 (now - timedelta(minutes=25)).isoformat(),
+                 now.isoformat(), now.isoformat()),
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["tags", "--db", str(db)])
+        assert result.exit_code == 0
+        assert "25m" in result.output
+
+    def test_tags_empty_shows_no_tags_message(self, db: Path) -> None:
+        """chrono tags with no tags shows a friendly message."""
+        runner = CliRunner()
+        result = runner.invoke(cli, ["tags", "--db", str(db)])
+        assert result.exit_code == 0
+        assert "No tags found" in result.output
+
+    def test_tags_sorted_by_total_time_descending(self, db: Path) -> None:
+        """Tags are sorted by total time, highest first."""
+        now = datetime.now(timezone.utc)
+        conn = get_connection(db)
+        try:
+            conn.execute(
+                "INSERT INTO entries (description, project, tags, start_time, end_time, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                ("big task", "general", "dev",
+                 (now - timedelta(hours=3)).isoformat(),
+                 now.isoformat(), now.isoformat()),
+            )
+            conn.execute(
+                "INSERT INTO entries (description, project, tags, start_time, end_time, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                ("small task", "general", "bug",
+                 (now - timedelta(minutes=30)).isoformat(),
+                 now.isoformat(), now.isoformat()),
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["tags", "--db", str(db)])
+        assert result.exit_code == 0
+        dev_pos = result.output.index("dev")
+        bug_pos = result.output.index("bug")
+        assert dev_pos < bug_pos
