@@ -18,11 +18,12 @@ from chronolog.core import (
     list_entries,
     list_projects,
     report_daily,
+    report_weekly,
     start_timer,
     stop_timer,
 )
 from chronolog.db import get_db_path, init_db
-from chronolog.display import add_total_row, create_entries_table
+from chronolog.display import add_total_row, create_entries_table, create_summary_table
 
 console = Console()
 
@@ -261,4 +262,21 @@ def report_yesterday(db: str | None) -> None:
     table = create_entries_table(entries)
     total_minutes = sum(e.duration_minutes or 0.0 for e in entries)
     add_total_row(table, total_minutes)
+    console.print(table)
+
+
+@report.command("week")
+@click.option("--db", type=click.Path(), default=None, hidden=True)
+def report_week(db: str | None) -> None:
+    """Show weekly summary by project."""
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    summaries = report_weekly(db_path)
+    if not summaries:
+        console.print("[dim]No entries for this week[/dim]")
+        return
+    table = create_summary_table(summaries)
+    total_hours = sum(s["hours"] for s in summaries)
+    table.add_section()
+    table.add_row("[bold]Total[/bold]", f"[bold]{total_hours:.1f}[/bold]", "", "")
     console.print(table)

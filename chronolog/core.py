@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from chronolog.db import get_connection, init_db
@@ -335,6 +335,53 @@ def list_tags(db_path: Path) -> list[dict]:
                 tag_stats[tag]['total_minutes'] += minutes
                 tag_stats[tag]['entry_count'] += 1
         return sorted(tag_stats.values(), key=lambda x: x['total_minutes'], reverse=True)
+    finally:
+        conn.close()
+
+
+def report_weekly(db_path: Path) -> list[dict]:
+    """Return per-project summaries for the current week (Monday-Sunday).
+
+    Args:
+        db_path: Path to the SQLite database.
+
+    Returns:
+        List of dicts with keys: project, hours, percentage.
+        Sorted by hours descending. Empty list if no entries.
+    """
+    init_db(db_path)
+    conn = get_connection(db_path)
+    try:
+        today = date.today()
+        monday = today - timedelta(days=today.weekday())
+        sunday = monday + timedelta(days=6)
+        start_of_week = datetime(monday.year, monday.month, monday.day, tzinfo=timezone.utc)
+        end_of_week = datetime(sunday.year, sunday.month, sunday.day, 23, 59, 59, tzinfo=timezone.utc)
+        rows = conn.execute(
+            "SELECT project, start_time, end_time FROM entries "
+            "WHERE end_time IS NOT NULL "
+            "AND start_time >= ? AND start_time <= ? ",
+            (start_of_week.isoformat(), end_of_week.isoformat()),
+        ).fetchall()
+
+        project_minutes: dict[str, float] = {}
+        for row in rows:
+            start = datetime.fromisoformat(row["start_time"])
+            end = datetime.fromisoformat(row["end_time"])
+            minutes = (end - start).total_seconds() / 60.0
+            project_minutes[row["project"]] = project_minutes.get(row["project"], 0.0) + minutes
+
+        total_minutes = sum(project_minutes.values())
+        if total_minutes == 0:
+            return []
+
+        summaries = []
+        for proj, mins in project_minutes.items():
+            hours = mins / 60.0
+            percentage = (mins / total_minutes) * 100.0
+            summaries.append({"project": proj, "hours": hours, "percentage": percentage})
+        summaries.sort(key=lambda x: x["hours"], reverse=True)
+        return summaries
     finally:
         conn.close()
 

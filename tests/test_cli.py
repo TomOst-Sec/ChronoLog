@@ -106,3 +106,45 @@ class TestReportYesterdayCLI:
         result = runner.invoke(cli, ["report", "yesterday", "--db", str(db)])
         assert result.exit_code == 0
         assert "No entries for" in result.output
+
+
+class TestReportWeekCLI:
+    """Tests for chrono report week."""
+
+    def _get_monday(self) -> date:
+        today = date.today()
+        return today - timedelta(days=today.weekday())
+
+    def test_report_week_shows_summary_table(self, db: Path) -> None:
+        """chrono report week shows project summary with bar chart."""
+        monday = self._get_monday()
+        start = datetime(monday.year, monday.month, monday.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(monday.year, monday.month, monday.day, 12, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "general work", "general", start, end)
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["report", "week", "--db", str(db)])
+        assert result.exit_code == 0
+        assert "general" in result.output
+        assert "Project" in result.output
+        assert "Hours" in result.output
+
+    def test_report_week_shows_total_hours(self, db: Path) -> None:
+        """Total hours shown at bottom."""
+        monday = self._get_monday()
+        start = datetime(monday.year, monday.month, monday.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(monday.year, monday.month, monday.day, 11, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "work", "general", start, end)
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["report", "week", "--db", str(db)])
+        assert result.exit_code == 0
+        assert "Total" in result.output
+        assert "2.0" in result.output
+
+    def test_report_week_empty_shows_message(self, db: Path) -> None:
+        """Empty week shows a friendly message."""
+        runner = CliRunner()
+        result = runner.invoke(cli, ["report", "week", "--db", str(db)])
+        assert result.exit_code == 0
+        assert "No entries" in result.output
