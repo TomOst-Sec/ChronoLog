@@ -253,6 +253,64 @@ def stop_timer(db_path: Path) -> TimeEntry:
 
 
 
+
+def edit_entry(
+    db_path: Path,
+    entry_id: int,
+    description: str | None = None,
+    project: str | None = None,
+    tags: list[str] | None = None,
+) -> TimeEntry:
+    """Edit an existing time entry."""
+    conn = get_connection(db_path)
+    try:
+        row = conn.execute('SELECT * FROM entries WHERE id = ?', (entry_id,)).fetchone()
+        if row is None:
+            raise RuntimeError(f'No entry with id {entry_id}')
+        if project is not None:
+            proj = conn.execute('SELECT name FROM projects WHERE name = ?', (project,)).fetchone()
+            if proj is None:
+                raise RuntimeError(f"No such project: '{project}'")
+        updates = {}
+        if description is not None:
+            updates['description'] = description
+        if project is not None:
+            updates['project'] = project
+        if tags is not None:
+            updates['tags'] = ','.join(tags)
+        if updates:
+            set_clause = ', '.join(f'{k} = ?' for k in updates)
+            values = list(updates.values()) + [entry_id]
+            conn.execute(f'UPDATE entries SET {set_clause} WHERE id = ?', values)
+            conn.commit()
+        updated = conn.execute('SELECT * FROM entries WHERE id = ?', (entry_id,)).fetchone()
+        tags_raw = updated['tags']
+        tag_list = tags_raw.split(',') if tags_raw else []
+        end_raw = updated['end_time']
+        end_time = datetime.fromisoformat(end_raw) if end_raw else None
+        return TimeEntry(
+            id=updated['id'], description=updated['description'],
+            project=updated['project'], tags=tag_list,
+            start_time=datetime.fromisoformat(updated['start_time']),
+            end_time=end_time,
+        )
+    finally:
+        conn.close()
+
+
+def delete_entry(db_path: Path, entry_id: int) -> None:
+    """Delete a time entry by ID."""
+    conn = get_connection(db_path)
+    try:
+        row = conn.execute('SELECT id FROM entries WHERE id = ?', (entry_id,)).fetchone()
+        if row is None:
+            raise RuntimeError(f'No entry with id {entry_id}')
+        conn.execute('DELETE FROM entries WHERE id = ?', (entry_id,))
+        conn.commit()
+    finally:
+        conn.close()
+
+
 def list_entries(db_path: Path, limit: int = 10) -> list[TimeEntry]:
     """Return recent time entries ordered by start_time descending.
 
