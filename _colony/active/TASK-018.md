@@ -1,6 +1,6 @@
 # TASK-018: CSV export command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -23,3 +23,6 @@ Implement `chrono export` to export time entries to CSV. Feature 7 from GOALS.md
 - Use `csv.DictWriter` for clean code
 - Running entries (no end_time) should be excluded from export or marked as "running"
 - M2/M3 scope — Feature 7
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773605621
