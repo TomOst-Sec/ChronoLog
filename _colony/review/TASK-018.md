@@ -1,6 +1,6 @@
 # TASK-018: CSV export command
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -26,3 +26,5 @@ Implement `chrono export` to export time entries to CSV. Feature 7 from GOALS.md
 
 **Claimed-By:** alpha-3
 **Claimed-At:** 1773605621
+
+**Completed-At:** 1773605776
