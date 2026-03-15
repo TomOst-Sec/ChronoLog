@@ -1,6 +1,6 @@
 # TASK-036: Rename project command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-004
@@ -23,3 +23,6 @@ Implement `chrono project rename OLD_NAME NEW_NAME` to rename a project. This up
 ## Notes
 - Use a transaction to update both tables atomically
 - This is a data-modifying operation — include confirmation prompt in CLI
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773606247
