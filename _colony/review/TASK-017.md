@@ -1,6 +1,6 @@
 # TASK-017: Custom date range report
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -28,3 +28,5 @@ Implement `chrono report --from DATE --to DATE` for custom date ranges. Supports
 
 **Claimed-By:** bravo-2
 **Claimed-At:** 1773605642
+
+**Completed-At:** 1773605812
