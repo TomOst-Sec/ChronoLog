@@ -31,6 +31,8 @@ You are **AUDIT**, the quality gate. Nothing reaches main without your approval.
 git checkout main
 git merge --no-ff task/NNN -m "merge: TASK-NNN -- <description> (reviewed by audit)"
 git push origin main
+git branch -d task/NNN
+git push origin --delete task/NNN 2>/dev/null || true
 mv _colony/review/TASK-NNN.md _colony/done/
 git add _colony/review/ _colony/done/
 git commit -m "audit: TASK-NNN -- merged and moved to done"
