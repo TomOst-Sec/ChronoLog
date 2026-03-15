@@ -1,6 +1,6 @@
 # TASK-051: Add --db option to project CLI subcommands
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** none
@@ -35,3 +35,5 @@ chrono project list --db /tmp/test.db             # Error: No such option: --db
 
 **Claimed-By:** bravo-2
 **Claimed-At:** 1773608713
+
+**Completed-At:** 1773608831
