@@ -1,6 +1,6 @@
 # TASK-014: Tagging system — list all tags with time totals
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -20,3 +20,6 @@ Implement `chrono tags` command showing all used tags with total time per tag. T
 ## Notes
 - Tags stored as comma-separated string in DB. Parse in Python.
 - This is M2 scope — needs M1 core (db, models, timer) merged first
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773605553
