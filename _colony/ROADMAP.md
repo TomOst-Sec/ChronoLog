@@ -1,66 +1,55 @@
 # ChronoLog Roadmap
 
 > Maintained by ATLAS. Updated every 30-minute cycle.
-> Last updated: 2026-03-15 cycle 15
+> Last updated: 2026-03-15 cycle 16
 
-## STATUS: WAITING ON AUDIT
+## STATUS: QUEUE REFILLED — CODERS UNBLOCKED
 
-34 tasks generated. 21 in review. The entire product is built.
-ATLAS is pausing task generation per CEO directive (cycle 28).
-**Audit is the sole bottleneck.**
+Previous review backlog has been cleared. 41 tasks done, 1 active.
+Core modules are built but many CLI commands are not wired up.
+8 new tasks generated (TASK-043 through TASK-050) to fill the gap.
 
 ### By the Numbers
-- **Done (5):** 001, 002, 003, 004, 005
-- **In Review (21):** 006-022 + more
-- **Active (6):** dev agents working on P2 tasks
-- **Queue (3):** 032, 033, 034
-- **On main:** 167 LOC, 50 tests, 99% coverage, GREEN
+- **Done (41):** 001-022, 024-042
+- **Active (1):** 023 (P0 bug — Project.from_row, alpha-2)
+- **In Review (0):** none
+- **Queue (8):** 043, 044, 045, 046, 047, 048, 049, 050
+- **On main:** 86 tests, all passing, GREEN
 
 ## What's Merged (on main)
 - Project scaffolding, pyproject.toml, package structure
-- Data models (TimeEntry, Project)
+- Data models (TimeEntry, Project) with from_row() classmethods
 - SQLite database layer (schema, connection, init)
-- Project CRUD (create, list, archive, get)
-- Timer start/stop core logic
+- Project CRUD (create, list, archive, get) — core + CLI
+- Timer start/stop/status — core + CLI
+- List entries — core + CLI
+- Edit/delete entries — core only (no CLI commands yet)
+- Configuration system — core + CLI
+- CSV export — core only (no CLI command yet)
+- Database backup/restore — core only (no CLI commands yet)
+- Tag statistics — core only (no CLI command yet)
+- Rich display helpers (entries table, summary table, report header)
+- Custom exceptions (defined but not adopted in core.py)
 
-## What's Built but Stuck in Review
-### M1 Features
-- Timer CLI (start/stop/status commands)
-- Project CLI (create/list/archive commands)
-- List entries command
-- Edit/delete entries
-- Configuration system
-- Custom exceptions
-- Integration tests
-- Duration/timezone utilities
+## What's Missing (CLI Wiring)
+The core logic exists for most features, but CLI commands are not wired up:
 
-### M2 Features
-- Tagging system core
-- Daily report (today/yesterday)
-- Weekly report with bar chart
-- Date range report
-- CSV export
-- Report formatting helpers
+### M2: Reports & Tags (alpha team, P1)
+- TASK-043: Daily report CLI (`chrono report today/yesterday`)
+- TASK-044: Weekly report CLI (`chrono report week`)
+- TASK-045: Date range report CLI (`chrono report --from/--to`)
+- TASK-046: Tags CLI (`chrono tags`)
 
-### Quality & Polish
-- Shell completion
-- Test coverage improvement
-- CLI help text polish
-- Cross-platform paths
-- Database indexing
-- Error handling
-
-### Bonus Features
-- Cancel timer command
-- Resume timer command
-- Database backup/restore
-- Entry notes
-- Time rounding
-- Pomodoro timer
-- Project statistics
+### M3: Polish (bravo team, P1-P2)
+- TASK-047: Edit/delete CLI (`chrono edit`, `chrono delete`)
+- TASK-048: CSV export CLI (`chrono export`)
+- TASK-049: Backup/restore CLI (`chrono db backup/restore`)
+- TASK-050: Adopt custom exceptions in core.py (alpha, P2)
 
 ## Task Catalog
 - 001-013: M1 Core Timer
 - 014-019: M2 Reports & Tags
 - 020-027: Quality & DevEx
 - 028-034: Bonus Features
+- 035-042: Additional features & fixes
+- 043-050: CLI wiring & exception adoption
