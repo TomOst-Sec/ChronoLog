@@ -1,10 +1,6 @@
 # TASK-045: Add date range report CLI command
 
-<<<<<<<< HEAD:_colony/review/TASK-045.md
-**Status:** review
-========
-**Status:** active
->>>>>>>> task/050:_colony/done/TASK-045.md
+**Status:** done
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-043
@@ -28,12 +24,7 @@ Implement `chrono report --from YYYY-MM-DD --to YYYY-MM-DD` for custom date rang
 - Date strings must be YYYY-MM-DD format
 - Only include completed entries (end_time IS NOT NULL)
 
-<<<<<<<< HEAD:_colony/review/TASK-045.md
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773608798
 
 **Completed-At:** 1773609023
-========
-**Claimed-By:** alpha-3
-**Claimed-At:** 1773608871
->>>>>>>> task/050:_colony/done/TASK-045.md

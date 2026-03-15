@@ -1,6 +1,6 @@
 # TASK-051: Add --db option to project CLI subcommands
 
-**Status:** review
+**Status:** done
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** none

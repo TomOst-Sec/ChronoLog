@@ -1,6 +1,6 @@
 # TASK-044: Add weekly report core logic and CLI command
 
-**Status:** review
+**Status:** done
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-043

@@ -1,6 +1,6 @@
 # TASK-050: Adopt custom exceptions in core.py
 
-**Status:** review
+**Status:** done
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** none
