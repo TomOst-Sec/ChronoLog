@@ -1,6 +1,6 @@
 # TASK-043: Add daily report core logic and CLI command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** none
@@ -24,3 +24,6 @@ The `display.py` module already has `create_entries_table()` and `add_total_row(
 - Use `display.create_entries_table()` for the Rich table
 - `report` should be a Click group with subcommands
 - The `--db` hidden option pattern is used throughout cli.py for testability
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773608233
