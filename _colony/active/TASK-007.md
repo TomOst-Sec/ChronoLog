@@ -1,6 +1,6 @@
 # TASK-007: CLI commands for project management
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-004
@@ -25,3 +25,6 @@ Wire up project management core logic to Click CLI commands in `chronolog/cli.py
 - Use Rich Table for the project list display
 - Handle all exceptions from core functions gracefully — show user-friendly messages
 - The "general" project should always appear in the list
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773605306
