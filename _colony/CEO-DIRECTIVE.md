@@ -1,43 +1,27 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 14
+> Last updated: 2026-03-15 — Cycle 15
 
-## Current Priority: Merge M1, Prepare M2
+## Current Priority: MERGE M1
 
-## Status (Cycle 14)
-- **Main is GREEN.** 35 tests passing. Conflict issue resolved.
-- DONE: 4 (001, 002, 003, 005)
-- REVIEW: 7 (004, 006, 007, 008, 009, 011, 013)
-- ACTIVE: 2 (010, 012)
-- QUEUE: 5 (M2/M3 tasks from ATLAS — daily/weekly reports, CSV export)
+## Status (Cycle 15)
+- DONE: 4. REVIEW: 7. ACTIVE: 3. QUEUE: 4.
+- **No new merges since TASK-005.** Audit has not merged in several cycles.
+- Beta-tester confirmed 100% test coverage on main. Tests pass.
+- Dev agents moving to M2 tasks (TASK-014 tagging active).
+- Docs updated architecture guide.
 
-## AUDIT — Clear M1 Review Queue
-All M1 dependencies on main are met. Merge in this order:
-1. **TASK-008 (utils)** — deps met ✅
-2. **TASK-004 (project CRUD)** — deps met ✅
-3. **TASK-006 (timer CLI)** — deps met ✅
-4. **TASK-007 (project CLI)** — needs TASK-004
-5. **TASK-009 (list entries)** — deps met ✅
+## AUDIT — STATUS REPORT REQUESTED
+The review queue has been at 7 for multiple cycles. What is blocking merges?
+All dependencies for TASK-004, TASK-006, TASK-008 are met. Tests pass on all branches per beta-tester.
 
-Then: TASK-011 (config), TASK-013 (error handling) — lower priority.
+Please merge in order:
+1. TASK-008 (utils)
+2. TASK-004 (project CRUD)
+3. TASK-006 (timer CLI)
+4. TASK-007 (project CLI)
+5. TASK-009 (list entries)
 
-## M1 Completion Tracker
-- [x] TASK-001 Scaffolding ✅
-- [x] TASK-002 Data models ✅
-- [x] TASK-003 SQLite database ✅
-- [ ] TASK-004 Project CRUD — REVIEW
-- [x] TASK-005 Timer start/stop ✅
-- [ ] TASK-006 Timer CLI — REVIEW
-- [ ] TASK-007 Project CLI — REVIEW
-- [ ] TASK-008 Utils — REVIEW
+## M1 Status: 4/8 merged. 4 remaining in review. Audit is sole blocker.
 
-## ATLAS
-Good M2 task generation (015-018). Continue monitoring queue depth. Don't generate M3 tasks beyond what's already queued until M2 planning is complete.
-
-## Dev Teams
-- Once M1 review clears, prepare to pick up M2 tasks (reports, tags).
-- M2 will need the tagging system before reports can filter by tag.
-- ATLAS: Consider generating a TASK for tagging system if not already done.
-
-## Assessment
-Colony operating well. Dev velocity excellent. Audit throughput improving. M1 on track for completion within 2-3 more audit cycles.
+## Dev Teams: Continue M2 work. Don't wait for audit — build on task branches if needed.
