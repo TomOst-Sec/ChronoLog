@@ -1,6 +1,6 @@
 # TASK-024: Database indexing for query performance
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -22,3 +22,6 @@ Add SQLite indexes to ensure query performance stays under 100ms even with 10,00
 - Use `CREATE INDEX IF NOT EXISTS` for idempotency
 - The performance test can use `time.perf_counter()` to measure query time
 - SQLite indexes are lightweight — don't worry about over-indexing
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773605816
