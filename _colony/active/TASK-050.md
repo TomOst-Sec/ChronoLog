@@ -1,6 +1,6 @@
 # TASK-050: Adopt custom exceptions in core.py
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** none
@@ -25,3 +25,6 @@
 - All custom exceptions inherit from `ChronoLogError` which has a `.message` attribute
 - CLI can catch `ChronoLogError` and print `.message` — simplifies error handling
 - This is a refactor — no new behavior, just better exception types
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773608292
