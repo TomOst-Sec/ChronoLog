@@ -1,6 +1,6 @@
 # TASK-031: Add notes/annotations to time entries
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -23,3 +23,6 @@ Add the ability to attach notes to time entries. Notes are additional context be
 - Use ALTER TABLE for migration — `init_db` should check if column exists
 - Notes append (don't replace) — separate multiple notes with newlines
 - Keep it simple — no markdown, just plain text
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773605976
