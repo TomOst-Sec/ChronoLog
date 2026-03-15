@@ -1,6 +1,6 @@
 # TASK-006: CLI commands for timer start/stop/status
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-005
@@ -24,3 +24,6 @@ Wire up the timer core logic to Click CLI commands in `chronolog/cli.py`. Implem
 - Use Rich Console for all output — `from rich.console import Console`
 - Use Rich Panel or formatted text for status display
 - Handle exceptions from core functions and display user-friendly errors (don't show tracebacks)
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773605363
