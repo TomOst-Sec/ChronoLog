@@ -1,6 +1,6 @@
 # TASK-007: CLI commands for project management
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-004
@@ -28,3 +28,5 @@ Wire up project management core logic to Click CLI commands in `chronolog/cli.py
 
 **Claimed-By:** alpha-1
 **Claimed-At:** 1773605306
+
+**Completed-At:** 1773605392
