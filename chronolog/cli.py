@@ -14,6 +14,8 @@ from chronolog.config import get_config, set_config
 from chronolog.core import (
     archive_project,
     create_project,
+    delete_entry,
+    edit_entry,
     get_active_timer,
     list_entries,
     list_projects,
@@ -95,6 +97,48 @@ def status(db: str | None) -> None:
         console.print(f"  Tags: {', '.join(entry.tags)}")
 
 
+
+
+@cli.command()
+@click.argument("entry_id", type=int)
+@click.option("--description", "-d", default=None, help="New description.")
+@click.option("--project", "-p", default=None, help="New project name.")
+@click.option("--tags", "-t", default=None, help="New comma-separated tags.")
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def edit(entry_id: int, description: str | None, project: str | None, tags: str | None, db: str | None) -> None:
+    """Edit an existing time entry."""
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    tag_list = [t.strip() for t in tags.split(",") if t.strip()] if tags else None
+    try:
+        entry = edit_entry(db_path, entry_id, description=description, project=project, tags=tag_list)
+        console.print(f"[green]Updated:[/green] {entry.description}")
+        console.print(f"  Project: {entry.project}")
+        if entry.tags:
+            console.print(f"  Tags: {', '.join(entry.tags)}")
+    except RuntimeError as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        raise SystemExit(1)
+
+
+@cli.command()
+@click.argument("entry_id", type=int)
+@click.option("--yes", "-y", is_flag=True, help="Skip confirmation prompt.")
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def delete(entry_id: int, yes: bool, db: str | None) -> None:
+    """Delete a time entry."""
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    if not yes:
+        if not click.confirm(f"Delete entry {entry_id}?"):
+            console.print("[yellow]Aborted.[/yellow]")
+            return
+    try:
+        delete_entry(db_path, entry_id)
+        console.print(f"[green]Deleted:[/green] entry {entry_id}")
+    except RuntimeError as exc:
+        console.print(f"[red]Error:[/red] {exc}")
+        raise SystemExit(1)
 
 
 @cli.command("list")
