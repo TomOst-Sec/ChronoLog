@@ -19,8 +19,8 @@ Goal: Implement Features 1 (start/stop timer), 2 (project management), and 9 (SQ
 ### Core Features (P0/P1 — after foundation)
 | Task | Title | Team | Priority | Depends | Status |
 |------|-------|------|----------|---------|--------|
-| TASK-005 | Timer start/stop core logic | alpha | P0 | TASK-001, TASK-003 | queue |
-| TASK-004 | Project management CRUD operations | bravo | P1 | TASK-001, TASK-003 | queue |
+| TASK-005 | Timer start/stop core logic | bravo | P0 | TASK-001, TASK-003 | queue |
+| TASK-004 | Project management CRUD operations | alpha | P1 | TASK-001, TASK-003 | queue |
 
 ### CLI Layer (P1 — after core)
 | Task | Title | Team | Priority | Depends | Status |
