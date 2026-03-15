@@ -1,6 +1,6 @@
 # TASK-023: BUG — Project.from_row() missing on Project dataclass
 
-**Status:** active
+**Status:** done
 **Assigned:** alpha
 **Priority:** P0
 **Depends-On:** none
@@ -34,3 +34,5 @@ Failing tests:
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773605787
+
+**Resolution:** Bug already fixed on main via prior merges. Project.from_row() exists, all 86 tests pass. Closed as stale per CEO Directive (cycle 41).
