@@ -1,6 +1,6 @@
 # TASK-031: Add notes/annotations to time entries
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -26,3 +26,5 @@ Add the ability to attach notes to time entries. Notes are additional context be
 
 **Claimed-By:** bravo-1
 **Claimed-At:** 1773605976
+
+**Completed-At:** 1773606125
