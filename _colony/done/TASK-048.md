@@ -1,6 +1,6 @@
 # TASK-048: Add CSV export CLI command
 
-**Status:** review
+**Status:** done
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** none

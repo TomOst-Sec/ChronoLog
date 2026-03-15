@@ -1,6 +1,6 @@
 # TASK-047: Add edit and delete entry CLI commands
 
-**Status:** review
+**Status:** done
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** none

@@ -1,6 +1,6 @@
 # TASK-049: Add backup and restore CLI commands
 
-**Status:** review
+**Status:** done
 **Assigned:** bravo
 **Priority:** P2
 **Depends-On:** none

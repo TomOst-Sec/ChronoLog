@@ -1,6 +1,6 @@
 # TASK-046: Add tags CLI command
 
-**Status:** review
+**Status:** done
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** none
