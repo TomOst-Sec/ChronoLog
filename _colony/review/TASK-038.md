@@ -1,6 +1,6 @@
 # TASK-038: JSON export format option
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-018
@@ -24,3 +24,5 @@ Add JSON as an alternative export format alongside CSV. `chrono export --format 
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773606262
+
+**Completed-At:** 1773606393
