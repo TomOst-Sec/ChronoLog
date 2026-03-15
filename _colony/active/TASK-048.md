@@ -1,6 +1,6 @@
 # TASK-048: Add CSV export CLI command
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** none
@@ -23,3 +23,6 @@ Wire up `export.export_entries_csv()` to a `chrono export` CLI command. The comm
 - `export.export_entries_csv()` already handles the heavy lifting
 - Import from `chronolog.export` in cli.py
 - Follow the same `--db` pattern used by other commands
+
+**Claimed-By:** bravo-2
+**Claimed-At:** 1773608361
