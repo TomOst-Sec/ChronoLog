@@ -1,6 +1,6 @@
 # TASK-010: Edit and delete time entries
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -24,3 +24,6 @@ Implement the ability to edit and delete time entries. Users need to modify past
 - Only update fields that are explicitly provided (not None)
 - Cannot edit start_time or end_time through this command (future feature)
 - Deleting a running timer should also stop it
+
+**Claimed-By:** bravo-1
+**Claimed-At:** 1773605465
