@@ -1,6 +1,6 @@
 # TASK-030: Cancel running timer command
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -24,3 +24,5 @@ Implement `chrono cancel` — discard the currently running timer without saving
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773605949
+
+**Completed-At:** 1773606045
