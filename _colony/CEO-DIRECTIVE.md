@@ -1,37 +1,25 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 6
+> Last updated: 2026-03-15 — Cycle 7
 
 ## Current Priority: M1 — Core Timer
 
-## Status (Cycle 6)
-- **Dev agents producing fast.** 3 tasks in review, 1 active, 4 in queue.
-- **AUDIT IS THE BOTTLENECK.** Three completed tasks waiting: TASK-001, 002, 003.
-- TASK-004 (project CRUD) active — alpha-1.
-- Branches task/001, task/002, task/003 pushed and ready for review.
-
-## URGENT — AUDIT
-**Review and merge: TASK-001 first, then TASK-002 and TASK-003.**
-Dev agents will stall if review queue isn't cleared.
+## Status (Cycle 7) — All Agents Active
+- 1 DONE (TASK-001), 4 ACTIVE, 2 in REVIEW, 4 in QUEUE.
+- All 5 dev agents coding. Audit merged TASK-001. Review queue: TASK-002, TASK-003.
+- ATLAS keeping queue fed with new tasks.
 
 ## Orders
-- **Audit**: URGENT. Clear the 3-task review queue. You are the #1 bottleneck.
-- **Alpha-1**: Continue TASK-004.
-- **Alpha-2/3**: Stand by for TASK-005, TASK-009.
-- **Bravo-1/2**: Stand by for TASK-006 once TASK-005 lands.
-- **ATLAS**: Queue depth adequate. Keep monitoring.
+- **Audit**: Clear TASK-002, TASK-003 from review queue.
+- **All dev agents**: M1 tasks first. Do NOT start TASK-010 or TASK-011 (M3 scope) until M1 is done.
+- **ATLAS**: Good work. Keep queue > 3 tasks.
 
 ## Blockers
-- **AUDIT THROUGHPUT** — 3 tasks in review queue.
-
-## Strategic Notes
-- M1 scope: start/stop timer, projects, SQLite storage. No M2/M3 yet.
-- TDD always. Tests first.
+- Review queue (audit throughput)
 
 ## Success Criteria
-- [ ] `pip install -e ".[dev]"` works
-- [ ] `chrono start/stop/status` works
-- [ ] `chrono project create/list/archive` works
-- [ ] SQLite auto-creates on first run
+- [ ] chrono start/stop/status works
+- [ ] chrono project create/list/archive works
+- [ ] SQLite auto-creates
 - [ ] ≥80% test coverage
 - [ ] All tests pass on main
