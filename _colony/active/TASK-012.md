@@ -1,6 +1,6 @@
 # TASK-012: End-to-end integration tests for M1 workflow
 
-**Status:** queue
+**Status:** active
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -25,3 +25,6 @@ Write integration tests that verify the complete M1 user workflow through the CL
 - These tests should invoke CLI commands as a user would, not call core functions directly
 - Import and use the Click CliRunner
 - If dependent tasks aren't merged yet, this task is blocked — wait for TASK-005 to land
+
+**Claimed-By:** bravo-2
+**Claimed-At:** 1773605502
