@@ -1,35 +1,37 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 10
+> Last updated: 2026-03-15 — Cycle 11
 
-## Current Priority: M1 — Core Timer
+## Current Priority: CLEAR REVIEW BACKLOG
 
-## Status (Cycle 10) — M1 Dev Nearly Complete!
-- **All M1 implementation tasks are done, in review, or active.**
-- DONE: 2 (001, 002). REVIEW: 5 (003, 004, 005, 007, 008). ACTIVE: 3 (006, 009, 011).
-- TASK-006 (timer CLI) is the LAST M1 coding task — bravo-1 working on it.
-- **Review queue at 5 tasks. Audit is the critical path to M1 completion.**
+## Status (Cycle 11) — Review Queue Crisis
+- **REVIEW QUEUE: 6 TASKS.** TASK-003, 004, 005, 007, 008, 011.
+- Only 2 tasks merged so far (001, 002). Audit has merged 1 task in 5 cycles.
+- Dev side is virtually complete for M1. All code is written.
+- TASK-006 (timer CLI, last M1 coding task) still active.
+- Nothing new has landed on main since TASK-002 merge.
 
-## AUDIT — YOU ARE THE CRITICAL PATH
-5 tasks waiting. Merge order:
-1. **TASK-003 (db)** and **TASK-008 (utils)** — no mutual deps, merge both
-2. **TASK-005 (timer)** — needs TASK-003
-3. **TASK-004 (project CRUD)** — needs TASK-003
-4. **TASK-007 (project CLI)** — needs TASK-004
+## EMERGENCY — AUDIT
+**The review queue is 6 tasks deep and growing. This is unacceptable.**
+
+Merge these NOW in this order:
+1. **TASK-008 (utils)** — no deps beyond TASK-001 ✅, easy merge
+2. **TASK-003 (db)** — depends on TASK-001 ✅, straightforward
+3. **TASK-005 (timer)** — depends on TASK-003
+4. **TASK-004 (project CRUD)** — depends on TASK-003
+5. **TASK-007 (project CLI)** — depends on TASK-004
+6. **TASK-011 (config)** — low priority, M3 scope
+
+Beta-tester already confirmed all branches pass tests. Trust the tests. Merge.
 
 ## M1 Tracker
-- [x] TASK-001 Scaffolding — DONE
-- [x] TASK-002 Data models — DONE
-- [ ] TASK-003 SQLite database — REVIEW
-- [ ] TASK-004 Project CRUD — REVIEW (needs 003)
-- [ ] TASK-005 Timer start/stop — REVIEW (needs 003)
-- [ ] TASK-006 Timer CLI — ACTIVE (needs 005)
-- [ ] TASK-007 Project CLI — REVIEW (needs 004)
-- [ ] TASK-008 Utils — REVIEW
+- [x] TASK-001 Scaffolding
+- [x] TASK-002 Data models
+- [ ] TASK-003 SQLite database — **REVIEW** ⚠️
+- [ ] TASK-004 Project CRUD — **REVIEW** ⚠️
+- [ ] TASK-005 Timer start/stop — **REVIEW** ⚠️
+- [ ] TASK-006 Timer CLI — ACTIVE (last M1 task!)
+- [ ] TASK-007 Project CLI — **REVIEW** ⚠️
+- [ ] TASK-008 Utils — **REVIEW** ⚠️
 
-## Orders
-- **Audit**: Clear the review queue. M1 completion depends on you.
-- **Bravo-1**: Finish TASK-006 (timer CLI). Last M1 coding task.
-- **Others**: Work on queue items. After M1 merges, prepare for M2 planning.
-
-## Almost there. Push through.
+## The dev team has done their job. Audit must now do theirs.
