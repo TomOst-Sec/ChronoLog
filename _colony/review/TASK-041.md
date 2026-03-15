@@ -1,6 +1,6 @@
 # TASK-041: Timer auto-stop on midnight boundary
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -25,3 +25,5 @@ Handle the edge case where a timer runs past midnight. When stopping a timer tha
 
 **Claimed-By:** alpha-3
 **Claimed-At:** 1773606389
+
+**Completed-At:** 1773606487
