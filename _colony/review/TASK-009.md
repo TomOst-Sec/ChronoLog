@@ -1,6 +1,6 @@
 # TASK-009: List recent time entries command
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -25,3 +25,5 @@ Implement `chrono list` to show recent time entries with their IDs. This is esse
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773605232
+
+**Completed-At:** 1773605431
