@@ -1,6 +1,6 @@
 # TASK-042: Interactive timer selection for multi-project workflows
 
-**Status:** active
+**Status:** review
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -24,3 +24,5 @@ Add `chrono switch "new task" --project NAME` that stops the current timer and i
 
 **Claimed-By:** alpha-2
 **Claimed-At:** 1773606417
+
+**Completed-At:** 1773606486
