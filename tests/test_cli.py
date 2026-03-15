@@ -263,3 +263,64 @@ class TestReportWeekCLI:
         result = runner.invoke(cli, ["report", "week", "--db", str(db)])
         assert result.exit_code == 0
         assert "No entries" in result.output
+class TestReportRangeCLI:
+    """Tests for chrono report --from/--to CLI command."""
+
+    def test_detail_view_by_default(self, db: Path) -> None:
+        """chrono report --from X --to Y shows detail entries."""
+        _insert_entry(
+            db, "jan work", "general",
+            datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc),
+            datetime(2024, 1, 15, 10, 0, tzinfo=timezone.utc),
+        )
+        runner = CliRunner()
+        result = runner.invoke(cli, [
+            "report", "--from", "2024-01-01", "--to", "2024-01-31",
+            "--db", str(db),
+        ])
+        assert result.exit_code == 0
+        assert "jan work" in result.output
+
+    def test_summary_view_with_flag(self, db: Path) -> None:
+        """chrono report --from X --to Y --summary shows project summary."""
+        _insert_entry(
+            db, "project work", "general",
+            datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc),
+            datetime(2024, 1, 15, 12, 0, tzinfo=timezone.utc),
+        )
+        runner = CliRunner()
+        result = runner.invoke(cli, [
+            "report", "--from", "2024-01-01", "--to", "2024-01-31",
+            "--summary", "--db", str(db),
+        ])
+        assert result.exit_code == 0
+        assert "general" in result.output
+        assert "Project" in result.output
+
+    def test_empty_range_shows_message(self, db: Path) -> None:
+        """Empty range shows a friendly message."""
+        runner = CliRunner()
+        result = runner.invoke(cli, [
+            "report", "--from", "2024-01-01", "--to", "2024-01-31",
+            "--db", str(db),
+        ])
+        assert result.exit_code == 0
+        assert "No entries" in result.output
+
+    def test_invalid_date_format_shows_error(self, db: Path) -> None:
+        """Invalid date format shows clear error."""
+        runner = CliRunner()
+        result = runner.invoke(cli, [
+            "report", "--from", "01-01-2024", "--to", "2024-01-31",
+            "--db", str(db),
+        ])
+        assert result.exit_code == 1
+        assert "Invalid date format" in result.output
+
+    def test_from_and_to_both_required(self, db: Path) -> None:
+        """Using --from without --to shows an error."""
+        runner = CliRunner()
+        result = runner.invoke(cli, [
+            "report", "--from", "2024-01-01", "--db", str(db),
+        ])
+        assert result.exit_code != 0

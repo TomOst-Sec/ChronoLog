@@ -424,6 +424,81 @@ def report_daily(db_path: Path, target_date: date) -> list[TimeEntry]:
         conn.close()
 
 
+def report_range(db_path: Path, from_date: date, to_date: date) -> list[TimeEntry]:
+    """Return completed entries within a date range.
+
+    Args:
+        db_path: Path to the SQLite database.
+        from_date: Start date (inclusive).
+        to_date: End date (inclusive).
+
+    Returns:
+        List of completed TimeEntry objects within the range, ordered by start_time.
+    """
+    init_db(db_path)
+    conn = get_connection(db_path)
+    try:
+        start = datetime(from_date.year, from_date.month, from_date.day, tzinfo=timezone.utc)
+        end = datetime(to_date.year, to_date.month, to_date.day, 23, 59, 59, tzinfo=timezone.utc)
+        rows = conn.execute(
+            "SELECT id, description, project, tags, start_time, end_time "
+            "FROM entries "
+            "WHERE end_time IS NOT NULL "
+            "AND start_time >= ? AND start_time <= ? "
+            "ORDER BY start_time",
+            (start.isoformat(), end.isoformat()),
+        ).fetchall()
+        return [TimeEntry.from_row(dict(row)) for row in rows]
+    finally:
+        conn.close()
+
+
+def report_range_summary(db_path: Path, from_date: date, to_date: date) -> list[dict]:
+    """Return per-project summaries for a date range.
+
+    Args:
+        db_path: Path to the SQLite database.
+        from_date: Start date (inclusive).
+        to_date: End date (inclusive).
+
+    Returns:
+        List of dicts with keys: project, hours, percentage.
+        Sorted by hours descending. Empty list if no entries.
+    """
+    init_db(db_path)
+    conn = get_connection(db_path)
+    try:
+        start = datetime(from_date.year, from_date.month, from_date.day, tzinfo=timezone.utc)
+        end = datetime(to_date.year, to_date.month, to_date.day, 23, 59, 59, tzinfo=timezone.utc)
+        rows = conn.execute(
+            "SELECT project, start_time, end_time FROM entries "
+            "WHERE end_time IS NOT NULL "
+            "AND start_time >= ? AND start_time <= ? ",
+            (start.isoformat(), end.isoformat()),
+        ).fetchall()
+
+        project_minutes: dict[str, float] = {}
+        for row in rows:
+            s = datetime.fromisoformat(row["start_time"])
+            e = datetime.fromisoformat(row["end_time"])
+            minutes = (e - s).total_seconds() / 60.0
+            project_minutes[row["project"]] = project_minutes.get(row["project"], 0.0) + minutes
+
+        total_minutes = sum(project_minutes.values())
+        if total_minutes == 0:
+            return []
+
+        summaries = []
+        for proj, mins in project_minutes.items():
+            hours = mins / 60.0
+            percentage = (mins / total_minutes) * 100.0
+            summaries.append({"project": proj, "hours": hours, "percentage": percentage})
+        summaries.sort(key=lambda x: x["hours"], reverse=True)
+        return summaries
+    finally:
+        conn.close()
+
+
 def list_entries(db_path: Path, limit: int = 10) -> list[TimeEntry]:
     """Return recent time entries ordered by start_time descending.
 

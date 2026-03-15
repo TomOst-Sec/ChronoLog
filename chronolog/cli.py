@@ -22,6 +22,8 @@ from chronolog.core import (
     list_tags,
     report_daily,
     report_weekly,
+    report_range,
+    report_range_summary,
     start_timer,
     stop_timer,
 )
@@ -309,11 +311,54 @@ def config_set(key: str, value: str, config_path: str | None) -> None:
 
 
 @cli.group(invoke_without_command=True)
+@click.option("--from", "from_date", default=None, help="Start date (YYYY-MM-DD).")
+@click.option("--to", "to_date", default=None, help="End date (YYYY-MM-DD).")
+@click.option("--summary", is_flag=True, help="Show project summary instead of detail.")
+@click.option("--db", type=click.Path(), default=None, hidden=True)
 @click.pass_context
-def report(ctx: click.Context) -> None:
+def report(ctx: click.Context, from_date: str | None, to_date: str | None, summary: bool, db: str | None) -> None:
     """View time reports."""
-    if ctx.invoked_subcommand is None:
+    if ctx.invoked_subcommand is not None:
+        return
+    if from_date is None and to_date is None:
         click.echo(ctx.get_help())
+        return
+    if from_date is None or to_date is None:
+        console.print("[red]Error:[/red] Both --from and --to are required.")
+        raise SystemExit(1)
+
+    import re
+    date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    for label, value in [("--from", from_date), ("--to", to_date)]:
+        if not date_pattern.match(value):
+            console.print(f"[red]Error:[/red] Invalid date format for {label}: '{value}'. Use YYYY-MM-DD.")
+            raise SystemExit(1)
+
+    from datetime import date as date_cls
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    fd = date_cls.fromisoformat(from_date)
+    td = date_cls.fromisoformat(to_date)
+
+    if summary:
+        summaries = report_range_summary(db_path, fd, td)
+        if not summaries:
+            console.print(f"[dim]No entries for {from_date} to {to_date}[/dim]")
+            return
+        table = create_summary_table(summaries)
+        total_hours = sum(s["hours"] for s in summaries)
+        table.add_section()
+        table.add_row("[bold]Total[/bold]", f"[bold]{total_hours:.1f}[/bold]", "", "")
+        console.print(table)
+    else:
+        entries = report_range(db_path, fd, td)
+        if not entries:
+            console.print(f"[dim]No entries for {from_date} to {to_date}[/dim]")
+            return
+        table = create_entries_table(entries)
+        total_minutes = sum(e.duration_minutes or 0.0 for e in entries)
+        add_total_row(table, total_minutes)
+        console.print(table)
 
 
 @report.command("today")

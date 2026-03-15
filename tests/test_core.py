@@ -15,6 +15,8 @@ from chronolog.core import (
     list_projects,
     report_daily,
     report_weekly,
+    report_range,
+    report_range_summary,
     start_timer,
     stop_timer,
 )
@@ -301,6 +303,67 @@ class TestReportWeekly:
         _insert_entry(db, "work on webapp", "webapp", start2, end2)
 
         summaries = report_weekly(db)
+class TestReportRange:
+    """Tests for report_range()."""
+
+    def test_returns_entries_within_range(self, db: Path) -> None:
+        start1 = datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc)
+        end1 = datetime(2024, 1, 15, 10, 0, tzinfo=timezone.utc)
+        start2 = datetime(2024, 1, 20, 14, 0, tzinfo=timezone.utc)
+        end2 = datetime(2024, 1, 20, 16, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "mid-month", "general", start1, end1)
+        _insert_entry(db, "late-month", "general", start2, end2)
+
+        entries = report_range(db, date(2024, 1, 1), date(2024, 1, 31))
+        assert len(entries) == 2
+
+    def test_excludes_entries_outside_range(self, db: Path) -> None:
+        in_range = datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc)
+        in_range_end = datetime(2024, 1, 15, 10, 0, tzinfo=timezone.utc)
+        out_range = datetime(2024, 2, 5, 9, 0, tzinfo=timezone.utc)
+        out_range_end = datetime(2024, 2, 5, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "in range", "general", in_range, in_range_end)
+        _insert_entry(db, "out of range", "general", out_range, out_range_end)
+
+        entries = report_range(db, date(2024, 1, 1), date(2024, 1, 31))
+        assert len(entries) == 1
+        assert entries[0].description == "in range"
+
+    def test_returns_empty_for_no_entries(self, db: Path) -> None:
+        entries = report_range(db, date(2024, 1, 1), date(2024, 1, 31))
+        assert entries == []
+
+    def test_excludes_running_entries(self, db: Path) -> None:
+        today = date.today()
+        start = datetime(today.year, today.month, today.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(today.year, today.month, today.day, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "completed", "general", start, end)
+        start_timer(db, description="running")
+
+        entries = report_range(db, today - timedelta(days=1), today + timedelta(days=1))
+        assert len(entries) == 1
+        assert entries[0].description == "completed"
+
+
+class TestReportRangeSummary:
+    """Tests for report_range_summary()."""
+
+    def _get_monday(self) -> date:
+        """Return the Monday of the current week."""
+        today = date.today()
+        return today - timedelta(days=today.weekday())
+
+    def test_returns_per_project_summaries(self, db: Path) -> None:
+        start1 = datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc)
+        end1 = datetime(2024, 1, 15, 11, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "general work", "general", start1, end1)
+
+        create_project(db, "webapp")
+        start2 = datetime(2024, 1, 16, 9, 0, tzinfo=timezone.utc)
+        end2 = datetime(2024, 1, 16, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "webapp work", "webapp", start2, end2)
+
+        summaries = report_range_summary(db, date(2024, 1, 1), date(2024, 1, 31))
         assert len(summaries) == 2
         for s in summaries:
             assert "project" in s
@@ -366,3 +429,22 @@ class TestReportWeekly:
         assert len(summaries) == 1
         assert summaries[0]["hours"] == pytest.approx(1.0, abs=0.01)
 
+    def test_returns_empty_for_no_entries(self, db: Path) -> None:
+        summaries = report_range_summary(db, date(2024, 1, 1), date(2024, 1, 31))
+        assert summaries == []
+
+    def test_percentage_calculated_correctly(self, db: Path) -> None:
+        # general: 3 hours, webapp: 1 hour -> 75% / 25%
+        start1 = datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc)
+        end1 = datetime(2024, 1, 15, 12, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "general", "general", start1, end1)
+
+        create_project(db, "webapp")
+        start2 = datetime(2024, 1, 16, 9, 0, tzinfo=timezone.utc)
+        end2 = datetime(2024, 1, 16, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "webapp", "webapp", start2, end2)
+
+        summaries = report_range_summary(db, date(2024, 1, 1), date(2024, 1, 31))
+        by_proj = {s["project"]: s for s in summaries}
+        assert by_proj["general"]["percentage"] == pytest.approx(75.0, abs=0.1)
+        assert by_proj["webapp"]["percentage"] == pytest.approx(25.0, abs=0.1)
