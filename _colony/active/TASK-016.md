@@ -1,6 +1,6 @@
 # TASK-016: Weekly report with project breakdown
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -23,3 +23,6 @@ Implement `chrono report week` showing a breakdown by project for the current we
 - Use `Rich.Bar` or Unicode blocks for the bar chart
 - Percentages should add up to 100% (of tracked time, not of calendar time)
 - M2 scope
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773605607
