@@ -1,6 +1,6 @@
 # TASK-020: Test coverage improvement — target 80%+
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -22,3 +22,6 @@ Review current test coverage, identify gaps, and add tests to reach 80%+ coverag
 - Focus on meaningful coverage — test error paths and edge cases, not trivial getters
 - Use `pytest --cov=chronolog --cov-report=term-missing` to see exact uncovered lines
 - Priority: core.py > cli.py > models.py > utils.py
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773605804
