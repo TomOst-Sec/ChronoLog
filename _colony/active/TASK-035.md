@@ -1,6 +1,6 @@
 # TASK-035: Streaks and productivity insights
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003
@@ -23,3 +23,6 @@ Implement `chrono insights` command showing productivity patterns: current strea
 - Streak calculation: iterate dates backwards from today, count consecutive days with entries
 - Use SQL GROUP BY for day-of-week analysis
 - Display with Rich Panel and formatted text
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773606147
