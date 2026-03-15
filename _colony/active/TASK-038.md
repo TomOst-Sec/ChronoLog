@@ -1,6 +1,6 @@
 # TASK-038: JSON export format option
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-018
@@ -21,3 +21,6 @@ Add JSON as an alternative export format alongside CSV. `chrono export --format 
 ## Notes
 - Use `json.dumps(entries, indent=2, default=str)` for pretty output
 - Reuse query logic from CSV export (TASK-018)
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773606262
