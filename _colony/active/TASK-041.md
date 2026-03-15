@@ -1,6 +1,6 @@
 # TASK-041: Timer auto-stop on midnight boundary
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -22,3 +22,6 @@ Handle the edge case where a timer runs past midnight. When stopping a timer tha
 - Midnight detection uses local timezone, not UTC
 - This is important for accurate daily reports
 - Use a transaction for the split operation (atomicity)
+
+**Claimed-By:** alpha-3
+**Claimed-At:** 1773606389
