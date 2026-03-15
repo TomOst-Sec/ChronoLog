@@ -1,6 +1,6 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 1 (inaugural)
+> Last updated: 2026-03-15 — Cycle 2
 
 ## Current Priority: M1 — Core Timer
 
@@ -31,7 +31,7 @@ We are at **day zero**. No application code exists. ATLAS must generate foundati
 - All times stored in UTC, displayed in local timezone from the start.
 
 ## Blockers
-- None. Clear runway.
+- **CRITICAL**: No agents have started yet. Task queue is empty. ATLAS must run to unblock the entire colony. Dev agents are idle with nothing to claim.
 
 ## Strategic Notes
 - M1 is: start/stop timer, projects, SQLite storage. That's it.
