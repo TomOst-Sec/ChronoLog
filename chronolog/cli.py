@@ -21,6 +21,7 @@ from chronolog.core import (
     stop_timer,
 )
 from chronolog.db import get_db_path, init_db
+from chronolog.exceptions import ChronoLogError
 
 console = Console()
 
@@ -50,8 +51,8 @@ def start(description: str, project: str, tags: str, db: str | None) -> None:
         console.print(f"  Project: {entry.project}")
         if entry.tags:
             console.print(f"  Tags: {', '.join(entry.tags)}")
-    except RuntimeError as exc:
-        console.print(f"[red]Error:[/red] {exc}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         raise SystemExit(1)
 
 
@@ -69,8 +70,8 @@ def stop(db: str | None) -> None:
             console.print(f"  Duration: {entry.duration_minutes:.1f} minutes")
         if entry.tags:
             console.print(f"  Tags: {', '.join(entry.tags)}")
-    except RuntimeError as exc:
-        console.print("[red]Error:[/red] No timer is currently running")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         raise SystemExit(1)
 
 
@@ -149,8 +150,8 @@ def project_create(name: str) -> None:
     try:
         proj = create_project(db_path, name)
         console.print(f"[green]Created project '{proj.name}'.[/green]")
-    except ValueError as e:
-        console.print(f"[red]Error:[/red] {e}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         sys.exit(1)
 
 
@@ -181,8 +182,8 @@ def project_archive(name: str) -> None:
     try:
         archive_project(db_path, name)
         console.print(f"[yellow]Archived project '{name}'.[/yellow]")
-    except ValueError as e:
-        console.print(f"[red]Error:[/red] {e}")
+    except ChronoLogError as exc:
+        console.print(f"[red]Error:[/red] {exc.message}")
         sys.exit(1)
 
 

@@ -7,6 +7,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from chronolog.db import get_connection, init_db
+from chronolog.exceptions import (
+    EntryNotFoundError,
+    InvalidProjectNameError,
+    NoActiveTimerError,
+    ProjectExistsError,
+    ProjectNotFoundError,
+    TimerAlreadyRunningError,
+)
 from chronolog.models import Project, TimeEntry
 
 
@@ -20,10 +28,10 @@ def _validate_project_name(name: str) -> None:
         name: The project name to validate.
 
     Raises:
-        ValueError: If the name is invalid.
+        InvalidProjectNameError: If the name is invalid.
     """
     if not name or len(name) > 50 or not _PROJECT_NAME_RE.match(name):
-        raise ValueError(
+        raise InvalidProjectNameError(
             f"Project name '{name}' is invalid. "
             "Names must be 1-50 chars, alphanumeric plus hyphens, "
             "and cannot start with a hyphen."
@@ -41,7 +49,8 @@ def create_project(db_path: Path | str, name: str) -> Project:
         The created Project.
 
     Raises:
-        ValueError: If the name is invalid or already exists.
+        InvalidProjectNameError: If the name is invalid.
+        ProjectExistsError: If the project already exists.
     """
     _validate_project_name(name)
     init_db(db_path)
@@ -51,7 +60,7 @@ def create_project(db_path: Path | str, name: str) -> Project:
             "SELECT name FROM projects WHERE name = ?", (name,)
         ).fetchone()
         if existing:
-            raise ValueError(f"Project '{name}' already exists.")
+            raise ProjectExistsError(f"Project '{name}' already exists.")
         now = datetime.now(timezone.utc)
         conn.execute(
             "INSERT INTO projects (name, created_at, archived) VALUES (?, ?, 0)",
@@ -100,10 +109,10 @@ def archive_project(db_path: Path | str, name: str) -> None:
         name: The project name to archive.
 
     Raises:
-        ValueError: If project doesn't exist, is already archived, or is "general".
+        ProjectNotFoundError: If project doesn't exist, is already archived, or is "general".
     """
     if name == "general":
-        raise ValueError("Cannot archive the 'general' project.")
+        raise ProjectNotFoundError("Cannot archive the 'general' project.")
     init_db(db_path)
     conn = get_connection(db_path)
     try:
@@ -112,9 +121,9 @@ def archive_project(db_path: Path | str, name: str) -> None:
             (name,),
         ).fetchone()
         if row is None:
-            raise ValueError(f"Project '{name}' does not exist.")
+            raise ProjectNotFoundError(f"Project '{name}' does not exist.")
         if row["archived"]:
-            raise ValueError(f"Project '{name}' is already archived.")
+            raise ProjectNotFoundError(f"Project '{name}' is already archived.")
         conn.execute(
             "UPDATE projects SET archived = 1 WHERE name = ?", (name,)
         )
@@ -165,7 +174,8 @@ def start_timer(
         The newly created TimeEntry.
 
     Raises:
-        RuntimeError: If a timer is already running or the project doesn't exist.
+        TimerAlreadyRunningError: If a timer is already running.
+        ProjectNotFoundError: If the project doesn't exist.
     """
     if tags is None:
         tags = []
@@ -177,14 +187,14 @@ def start_timer(
             "SELECT id FROM entries WHERE end_time IS NULL"
         ).fetchone()
         if row is not None:
-            raise RuntimeError("A timer is already running — stop it first")
+            raise TimerAlreadyRunningError("A timer is already running — stop it first")
 
         # Check project exists
         proj = conn.execute(
             "SELECT name FROM projects WHERE name = ?", (project,)
         ).fetchone()
         if proj is None:
-            raise RuntimeError(
+            raise ProjectNotFoundError(
                 f"No such project: '{project}' — create it first"
             )
 
@@ -219,7 +229,7 @@ def stop_timer(db_path: Path) -> TimeEntry:
         The completed TimeEntry with end_time set.
 
     Raises:
-        RuntimeError: If no timer is currently running.
+        NoActiveTimerError: If no timer is currently running.
     """
     conn = get_connection(db_path)
     try:
@@ -227,7 +237,7 @@ def stop_timer(db_path: Path) -> TimeEntry:
             "SELECT * FROM entries WHERE end_time IS NULL"
         ).fetchone()
         if row is None:
-            raise RuntimeError("No timer is currently running")
+            raise NoActiveTimerError("No timer is currently running")
 
         now = datetime.now(timezone.utc)
         conn.execute(
@@ -266,11 +276,11 @@ def edit_entry(
     try:
         row = conn.execute('SELECT * FROM entries WHERE id = ?', (entry_id,)).fetchone()
         if row is None:
-            raise RuntimeError(f'No entry with id {entry_id}')
+            raise EntryNotFoundError(f'No entry with id {entry_id}')
         if project is not None:
             proj = conn.execute('SELECT name FROM projects WHERE name = ?', (project,)).fetchone()
             if proj is None:
-                raise RuntimeError(f"No such project: '{project}'")
+                raise ProjectNotFoundError(f"No such project: '{project}'")
         updates = {}
         if description is not None:
             updates['description'] = description
@@ -304,7 +314,7 @@ def delete_entry(db_path: Path, entry_id: int) -> None:
     try:
         row = conn.execute('SELECT id FROM entries WHERE id = ?', (entry_id,)).fetchone()
         if row is None:
-            raise RuntimeError(f'No entry with id {entry_id}')
+            raise EntryNotFoundError(f'No entry with id {entry_id}')
         conn.execute('DELETE FROM entries WHERE id = ?', (entry_id,))
         conn.commit()
     finally:

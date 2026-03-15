@@ -7,6 +7,8 @@ import pytest
 from chronolog.core import (
     archive_project,
     create_project,
+    delete_entry,
+    edit_entry,
     get_active_timer,
     get_project,
     list_projects,
@@ -14,6 +16,14 @@ from chronolog.core import (
     stop_timer,
 )
 from chronolog.db import init_db
+from chronolog.exceptions import (
+    EntryNotFoundError,
+    InvalidProjectNameError,
+    NoActiveTimerError,
+    ProjectExistsError,
+    ProjectNotFoundError,
+    TimerAlreadyRunningError,
+)
 
 
 @pytest.fixture
@@ -47,11 +57,11 @@ class TestStartTimer:
 
     def test_start_timer_raises_if_already_running(self, db: Path) -> None:
         start_timer(db, description="first")
-        with pytest.raises(Exception, match="already"):
+        with pytest.raises(TimerAlreadyRunningError):
             start_timer(db, description="second")
 
     def test_start_timer_raises_if_project_missing(self, db: Path) -> None:
-        with pytest.raises(Exception, match="project"):
+        with pytest.raises(ProjectNotFoundError):
             start_timer(db, description="task", project="nonexistent")
 
 
@@ -66,7 +76,7 @@ class TestStopTimer:
         assert stopped.end_time >= stopped.start_time
 
     def test_stop_timer_raises_if_none_running(self, db: Path) -> None:
-        with pytest.raises(Exception, match="[Nn]o.*running|not running"):
+        with pytest.raises(NoActiveTimerError):
             stop_timer(db)
 
 
@@ -105,19 +115,19 @@ class TestCreateProject:
 
     def test_create_duplicate_raises(self, db: Path) -> None:
         create_project(db, "dup-project")
-        with pytest.raises(ValueError, match="already exists"):
+        with pytest.raises(ProjectExistsError):
             create_project(db, "dup-project")
 
     def test_create_invalid_name_empty(self, db: Path) -> None:
-        with pytest.raises(ValueError, match="invalid"):
+        with pytest.raises(InvalidProjectNameError):
             create_project(db, "")
 
     def test_create_invalid_name_special_chars(self, db: Path) -> None:
-        with pytest.raises(ValueError, match="invalid"):
+        with pytest.raises(InvalidProjectNameError):
             create_project(db, "bad name!")
 
     def test_create_invalid_name_too_long(self, db: Path) -> None:
-        with pytest.raises(ValueError, match="invalid"):
+        with pytest.raises(InvalidProjectNameError):
             create_project(db, "a" * 51)
 
 
@@ -159,17 +169,17 @@ class TestArchiveProject:
         assert project.archived is True
 
     def test_archive_nonexistent_raises(self, db: Path) -> None:
-        with pytest.raises(ValueError, match="does not exist"):
+        with pytest.raises(ProjectNotFoundError):
             archive_project(db, "nonexistent")
 
     def test_archive_already_archived_raises(self, db: Path) -> None:
         create_project(db, "already")
         archive_project(db, "already")
-        with pytest.raises(ValueError, match="already archived"):
+        with pytest.raises(ProjectNotFoundError):
             archive_project(db, "already")
 
     def test_archive_general_raises(self, db: Path) -> None:
-        with pytest.raises(ValueError, match="general"):
+        with pytest.raises(ProjectNotFoundError):
             archive_project(db, "general")
 
 
@@ -182,3 +192,28 @@ class TestGetProject:
     def test_get_nonexistent(self, db: Path) -> None:
         result = get_project(db, "nonexistent")
         assert result is None
+
+
+class TestEditEntry:
+    def test_edit_nonexistent_raises(self, db: Path) -> None:
+        with pytest.raises(EntryNotFoundError):
+            edit_entry(db, entry_id=9999)
+
+    def test_edit_entry_description(self, db: Path) -> None:
+        entry = start_timer(db, description="original")
+        stop_timer(db)
+        updated = edit_entry(db, entry_id=entry.id, description="updated")
+        assert updated.description == "updated"
+
+
+class TestDeleteEntry:
+    def test_delete_nonexistent_raises(self, db: Path) -> None:
+        with pytest.raises(EntryNotFoundError):
+            delete_entry(db, entry_id=9999)
+
+    def test_delete_entry(self, db: Path) -> None:
+        entry = start_timer(db, description="to delete")
+        stop_timer(db)
+        delete_entry(db, entry_id=entry.id)
+        with pytest.raises(EntryNotFoundError):
+            edit_entry(db, entry_id=entry.id)
