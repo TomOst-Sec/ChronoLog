@@ -1,6 +1,6 @@
 # TASK-048: Add CSV export CLI command
 
-**Status:** active
+**Status:** review
 **Assigned:** bravo
 **Priority:** P1
 **Depends-On:** none
@@ -26,3 +26,5 @@ Wire up `export.export_entries_csv()` to a `chrono export` CLI command. The comm
 
 **Claimed-By:** bravo-2
 **Claimed-At:** 1773608361
+
+**Completed-At:** 1773608487
