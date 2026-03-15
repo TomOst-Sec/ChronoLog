@@ -1,6 +1,6 @@
 # TASK-033: Pomodoro-style timer with duration limit
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P2
 **Depends-On:** TASK-001, TASK-003, TASK-005
@@ -22,3 +22,6 @@ Add an optional duration limit to timers. `chrono start --for 25m` starts a time
 - Since CLI can't run as daemon, auto-stop isn't possible. Just show warning in status.
 - Store planned_end_time or planned_minutes in the entry
 - Nice-to-have feature beyond core GOALS.md scope
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773606079
