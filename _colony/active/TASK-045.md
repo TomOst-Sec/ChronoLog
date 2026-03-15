@@ -1,6 +1,6 @@
 # TASK-045: Add date range report CLI command
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-043
@@ -23,3 +23,6 @@ Implement `chrono report --from YYYY-MM-DD --to YYYY-MM-DD` for custom date rang
 - Reuse `display.create_summary_table()` for summary view
 - Date strings must be YYYY-MM-DD format
 - Only include completed entries (end_time IS NOT NULL)
+
+**Claimed-By:** alpha-2
+**Claimed-At:** 1773608798
