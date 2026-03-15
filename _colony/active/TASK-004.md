@@ -1,6 +1,6 @@
 # TASK-004: Project management CRUD operations
 
-**Status:** queue
+**Status:** active
 **Assigned:** alpha
 **Priority:** P1
 **Depends-On:** TASK-001, TASK-003
@@ -23,3 +23,6 @@ Implement project management functions in `chronolog/core.py`: create, list, and
 - Import Project model from models.py (TASK-002)
 - Use the `get_connection` / `init_db` functions from TASK-003
 - All functions should init_db before operating (idempotent)
+
+**Claimed-By:** alpha-1
+**Claimed-At:** 1773605145
