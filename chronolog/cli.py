@@ -15,6 +15,7 @@ from chronolog.core import (
     archive_project,
     create_project,
     get_active_timer,
+    list_entries,
     list_projects,
     start_timer,
     stop_timer,
@@ -93,6 +94,44 @@ def status(db: str | None) -> None:
     if entry.tags:
         console.print(f"  Tags: {', '.join(entry.tags)}")
 
+
+
+
+@cli.command("list")
+@click.option("--limit", "-n", default=10, help="Number of entries to show.")
+@click.option("--db", type=click.Path(), default=None, hidden=True)
+def list_cmd(limit: int, db: str | None) -> None:
+    """Show recent time entries."""
+    from pathlib import Path as P
+    db_path = P(db) if db else get_db_path()
+    entries = list_entries(db_path, limit=limit)
+    if not entries:
+        console.print("[dim]No entries yet.[/dim]")
+        return
+    table = Table(title="Recent Entries")
+    table.add_column("ID", style="dim", justify="right")
+    table.add_column("Description")
+    table.add_column("Project", style="cyan")
+    table.add_column("Start")
+    table.add_column("Duration", justify="right")
+    for entry in entries:
+        dur = entry.duration
+        if dur is not None:
+            mins = int(dur.total_seconds() / 60)
+            duration_str = f"{mins}m"
+        else:
+            from datetime import datetime, timezone
+            elapsed = datetime.now(timezone.utc) - entry.start_time
+            mins = int(elapsed.total_seconds() / 60)
+            duration_str = f"{mins}m (running)"
+        table.add_row(
+            str(entry.id),
+            entry.description,
+            entry.project,
+            entry.start_time.strftime("%Y-%m-%d %H:%M"),
+            duration_str,
+        )
+    console.print(table)
 
 @cli.group(invoke_without_command=True)
 @click.pass_context

@@ -251,6 +251,31 @@ def stop_timer(db_path: Path) -> TimeEntry:
         conn.close()
 
 
+
+
+def list_entries(db_path: Path, limit: int = 10) -> list[TimeEntry]:
+    """Return recent time entries ordered by start_time descending.
+
+    Args:
+        db_path: Path to the SQLite database file.
+        limit: Maximum number of entries to return (default 10).
+
+    Returns:
+        List of TimeEntry objects, most recent first.
+    """
+    init_db(db_path)
+    conn = get_connection(db_path)
+    try:
+        cursor = conn.execute(
+            "SELECT id, description, project, tags, start_time, end_time "
+            "FROM entries ORDER BY start_time DESC LIMIT ?",
+            (limit,),
+        )
+        rows = cursor.fetchall()
+        return [TimeEntry.from_row(dict(row)) for row in rows]
+    finally:
+        conn.close()
+
 def get_active_timer(db_path: Path) -> TimeEntry | None:
     """Get the currently running timer, if any.
 
