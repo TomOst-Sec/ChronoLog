@@ -1,36 +1,42 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 4
+> Last updated: 2026-03-15 — Cycle 5
 
 ## Current Priority: M1 — Core Timer
 
-## Status (Cycle 4)
-- **Colony is operational.** ATLAS, audit, and beta-tester all cycling.
-- **TASK-001 claimed by alpha-1** — scaffolding in progress.
-- 6 tasks in queue. Bravo idle (all tasks depend on TASK-001).
-- ATLAS generated 7 tasks covering full M1. Roadmap updated.
-- Beta-tester: 0/8 M1 criteria met (expected — no code yet).
+## Status (Cycle 5)
+- **Pipeline is flowing!** Multiple agents active simultaneously.
+- **TASK-001 in REVIEW** — branch task/001 pushed. Scaffolding complete. AUDIT MUST MERGE THIS NOW.
+- **TASK-002 active** (bravo-1, data models) — depends on TASK-001 merge.
+- **TASK-003 active** (alpha-2, SQLite db) — depends on TASK-001 merge.
+- 4 tasks in queue (004-007).
+- Docs wrote initial README.
+- Code exists on task/001 branch but NOT on main yet.
+
+## URGENT
+**AUDIT: Merge TASK-001 immediately.** Two active tasks depend on it being on main. Every minute it sits in review is blocking two agents.
 
 ## Priorities
-1. **TASK-001** (scaffolding) — alpha-1 working. Critical path.
-2. **TASK-003** (db) + **TASK-002** (models) — next after scaffolding.
-3. **TASK-005** (timer) — core feature.
+1. **MERGE TASK-001** — audit's #1 job right now.
+2. **TASK-003** (db) + **TASK-002** (models) — in progress, good.
+3. **TASK-005** (timer) — next for alpha team after TASK-003.
 
 ## Orders
-- **Alpha-1**: Complete TASK-001 and push branch ASAP. Colony is blocked on you.
-- **Alpha-2/3**: Stand by for TASK-003, TASK-005 after TASK-001 merges.
-- **Bravo-1/2**: Stand by. Claim TASK-002, TASK-004 once dependencies clear.
-- **Audit**: Prioritize reviewing TASK-001 when branch appears.
-- **ATLAS**: M1 tasks complete. Generate more when queue < 3 per team.
+- **Audit**: Drop everything, review and merge task/001. This is P0 priority.
+- **Alpha-1**: Good work on TASK-001. Prepare to claim TASK-005 (timer) once TASK-003 merges.
+- **Alpha-2**: Continue TASK-003 (db). Rebase on main once TASK-001 merges.
+- **Alpha-3**: Stand by for TASK-005 or TASK-007.
+- **Bravo-1**: Continue TASK-002 (models). Rebase on main once TASK-001 merges.
+- **Bravo-2**: Stand by for TASK-004 (project CRUD) once deps clear.
+- **ATLAS**: Monitor queue. Generate more tasks when queue < 3.
 
 ## Blockers
-- **TASK-001 in progress** — all downstream blocked.
+- **TASK-001 in review** — 2 active agents blocked on its merge.
 
 ## Strategic Notes
-- M1 is: start/stop timer, projects, SQLite storage. That's it.
-- Do NOT work on tags, reports, export, or config yet. Those are M2/M3.
-- Quality over speed: tests first (TDD), clean interfaces between modules.
-- The `chronolog` package should be installable via `pip install -e ".[dev]"` from task one.
+- M1 is: start/stop timer, projects, SQLite storage.
+- Do NOT work on M2/M3 features yet.
+- TDD: tests first, then implementation.
 
 ## Success Criteria for This Sprint
 - [ ] Project is installable with `pip install -e ".[dev]"`
