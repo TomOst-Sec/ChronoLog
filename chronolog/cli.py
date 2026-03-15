@@ -17,10 +17,12 @@ from chronolog.core import (
     get_active_timer,
     list_entries,
     list_projects,
+    report_daily,
     start_timer,
     stop_timer,
 )
 from chronolog.db import get_db_path, init_db
+from chronolog.display import add_total_row, create_entries_table
 
 console = Console()
 
@@ -214,3 +216,49 @@ def config_set(key: str, value: str, config_path: str | None) -> None:
     path = Path(config_path) if config_path else None
     set_config(key, value, config_path=path)
     click.echo(f"Set {key} = {value}")
+
+
+@cli.group(invoke_without_command=True)
+@click.pass_context
+def report(ctx: click.Context) -> None:
+    """View time reports."""
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
+
+
+@report.command("today")
+@click.option("--db", type=click.Path(), default=None, hidden=True)
+def report_today(db: str | None) -> None:
+    """Show today's time entries."""
+    from datetime import date
+
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    target = date.today()
+    entries = report_daily(db_path, target)
+    if not entries:
+        console.print(f"[dim]No entries for {target.isoformat()}[/dim]")
+        return
+    table = create_entries_table(entries)
+    total_minutes = sum(e.duration_minutes or 0.0 for e in entries)
+    add_total_row(table, total_minutes)
+    console.print(table)
+
+
+@report.command("yesterday")
+@click.option("--db", type=click.Path(), default=None, hidden=True)
+def report_yesterday(db: str | None) -> None:
+    """Show yesterday's time entries."""
+    from datetime import date, timedelta
+
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
+    target = date.today() - timedelta(days=1)
+    entries = report_daily(db_path, target)
+    if not entries:
+        console.print(f"[dim]No entries for {target.isoformat()}[/dim]")
+        return
+    table = create_entries_table(entries)
+    total_minutes = sum(e.duration_minutes or 0.0 for e in entries)
+    add_total_row(table, total_minutes)
+    console.print(table)

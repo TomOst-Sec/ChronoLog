@@ -1,5 +1,6 @@
 """Tests for ChronoLog core business logic."""
 
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -10,10 +11,11 @@ from chronolog.core import (
     get_active_timer,
     get_project,
     list_projects,
+    report_daily,
     start_timer,
     stop_timer,
 )
-from chronolog.db import init_db
+from chronolog.db import get_connection, init_db
 
 
 @pytest.fixture
@@ -182,3 +184,61 @@ class TestGetProject:
     def test_get_nonexistent(self, db: Path) -> None:
         result = get_project(db, "nonexistent")
         assert result is None
+
+
+def _insert_entry(db: Path, description: str, project: str, start: datetime, end: datetime, tags: str = "") -> None:
+    """Helper to insert a completed entry directly into the DB."""
+    conn = get_connection(db)
+    try:
+        conn.execute(
+            "INSERT INTO entries (description, project, tags, start_time, end_time, created_at) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (description, project, tags, start.isoformat(), end.isoformat(), start.isoformat()),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+class TestReportDaily:
+    """Tests for report_daily()."""
+
+    def test_returns_entries_for_given_date(self, db: Path) -> None:
+        today = date.today()
+        start = datetime(today.year, today.month, today.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(today.year, today.month, today.day, 10, 30, tzinfo=timezone.utc)
+        _insert_entry(db, "morning work", "general", start, end)
+
+        entries = report_daily(db, today)
+        assert len(entries) == 1
+        assert entries[0].description == "morning work"
+
+    def test_excludes_other_dates(self, db: Path) -> None:
+        today = date.today()
+        yesterday = today - timedelta(days=1)
+        start_today = datetime(today.year, today.month, today.day, 9, 0, tzinfo=timezone.utc)
+        end_today = datetime(today.year, today.month, today.day, 10, 0, tzinfo=timezone.utc)
+        start_yest = datetime(yesterday.year, yesterday.month, yesterday.day, 9, 0, tzinfo=timezone.utc)
+        end_yest = datetime(yesterday.year, yesterday.month, yesterday.day, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "today work", "general", start_today, end_today)
+        _insert_entry(db, "yesterday work", "general", start_yest, end_yest)
+
+        entries = report_daily(db, today)
+        assert len(entries) == 1
+        assert entries[0].description == "today work"
+
+    def test_returns_empty_list_when_no_entries(self, db: Path) -> None:
+        entries = report_daily(db, date.today())
+        assert entries == []
+
+    def test_includes_only_completed_entries(self, db: Path) -> None:
+        today = date.today()
+        start = datetime(today.year, today.month, today.day, 9, 0, tzinfo=timezone.utc)
+        end = datetime(today.year, today.month, today.day, 10, 0, tzinfo=timezone.utc)
+        _insert_entry(db, "completed", "general", start, end)
+        # Start a timer but don't stop it (running entry)
+        start_timer(db, description="running")
+
+        entries = report_daily(db, today)
+        assert len(entries) == 1
+        assert entries[0].description == "completed"

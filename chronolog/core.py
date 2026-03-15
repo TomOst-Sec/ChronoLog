@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from chronolog.db import get_connection, init_db
@@ -335,6 +335,34 @@ def list_tags(db_path: Path) -> list[dict]:
                 tag_stats[tag]['total_minutes'] += minutes
                 tag_stats[tag]['entry_count'] += 1
         return sorted(tag_stats.values(), key=lambda x: x['total_minutes'], reverse=True)
+    finally:
+        conn.close()
+
+
+def report_daily(db_path: Path, target_date: date) -> list[TimeEntry]:
+    """Return completed entries for a given date.
+
+    Args:
+        db_path: Path to the SQLite database.
+        target_date: The date to query entries for.
+
+    Returns:
+        List of completed TimeEntry objects for the given date, ordered by start_time.
+    """
+    init_db(db_path)
+    conn = get_connection(db_path)
+    try:
+        start_of_day = datetime(target_date.year, target_date.month, target_date.day, tzinfo=timezone.utc)
+        end_of_day = datetime(target_date.year, target_date.month, target_date.day, 23, 59, 59, tzinfo=timezone.utc)
+        rows = conn.execute(
+            "SELECT id, description, project, tags, start_time, end_time "
+            "FROM entries "
+            "WHERE end_time IS NOT NULL "
+            "AND start_time >= ? AND start_time <= ? "
+            "ORDER BY start_time",
+            (start_of_day.isoformat(), end_of_day.isoformat()),
+        ).fetchall()
+        return [TimeEntry.from_row(dict(row)) for row in rows]
     finally:
         conn.close()
 
