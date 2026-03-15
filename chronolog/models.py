@@ -100,3 +100,27 @@ class Project:
     name: str
     created_at: datetime
     archived: bool = False
+
+    def to_row(self) -> dict[str, Any]:
+        """Convert to a dict suitable for DB insertion."""
+        return {
+            "name": self.name,
+            "created_at": self.created_at.isoformat(),
+            "archived": 1 if self.archived else 0,
+        }
+
+    @classmethod
+    def from_row(cls, row: dict[str, Any]) -> Project:
+        """Construct a Project from a database row dict.
+
+        Args:
+            row: A dict-like database row.
+
+        Returns:
+            A Project instance.
+        """
+        return cls(
+            name=row["name"],
+            created_at=datetime.fromisoformat(row["created_at"]),
+            archived=bool(row["archived"]),
+        )
