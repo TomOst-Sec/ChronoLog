@@ -146,9 +146,11 @@ def project(ctx: click.Context) -> None:
 
 @project.command("create")
 @click.argument("name")
-def project_create(name: str) -> None:
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def project_create(name: str, db: str | None) -> None:
     """Create a new project."""
-    db_path = get_db_path()
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
     try:
         proj = create_project(db_path, name)
         console.print(f"[green]Created project '{proj.name}'.[/green]")
@@ -159,9 +161,11 @@ def project_create(name: str) -> None:
 
 @project.command("list")
 @click.option("--all", "include_all", is_flag=True, help="Include archived projects.")
-def project_list(include_all: bool) -> None:
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def project_list(include_all: bool, db: str | None) -> None:
     """List projects."""
-    db_path = get_db_path()
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
     projects = list_projects(db_path, include_archived=include_all)
     table = Table(title="Projects")
     table.add_column("Name")
@@ -178,9 +182,11 @@ def project_list(include_all: bool) -> None:
 
 @project.command("archive")
 @click.argument("name")
-def project_archive(name: str) -> None:
+@click.option("--db", type=click.Path(), default=None, hidden=True, help="Database path (for testing).")
+def project_archive(name: str, db: str | None) -> None:
     """Archive a project."""
-    db_path = get_db_path()
+    db_path = Path(db) if db else get_db_path()
+    init_db(db_path)
     try:
         archive_project(db_path, name)
         console.print(f"[yellow]Archived project '{name}'.[/yellow]")

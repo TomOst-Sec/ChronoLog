@@ -221,3 +221,51 @@ class TestTagsCommand:
         dev_pos = result.output.index("dev")
         bug_pos = result.output.index("bug")
         assert dev_pos < bug_pos
+
+
+class TestProjectDbOption:
+    """Tests for --db option on project subcommands."""
+
+    def test_project_create_with_db_option(self, tmp_path):
+        """chrono project create NAME --db PATH uses the specified database."""
+        db_path = tmp_path / "test.db"
+        init_db(db_path)
+        runner = CliRunner()
+        result = runner.invoke(cli, ["project", "create", "myproject", "--db", str(db_path)])
+        assert result.exit_code == 0
+        assert "myproject" in result.output
+
+        # Verify the project was actually created in the right db
+        conn = get_connection(db_path)
+        try:
+            row = conn.execute("SELECT name FROM projects WHERE name = 'myproject'").fetchone()
+            assert row is not None
+        finally:
+            conn.close()
+
+    def test_project_list_with_db_option(self, tmp_path):
+        """chrono project list --db PATH reads from the specified database."""
+        db_path = tmp_path / "test.db"
+        init_db(db_path)
+        runner = CliRunner()
+        result = runner.invoke(cli, ["project", "list", "--db", str(db_path)])
+        assert result.exit_code == 0
+        assert "general" in result.output
+
+    def test_project_archive_with_db_option(self, tmp_path):
+        """chrono project archive NAME --db PATH uses the specified database."""
+        db_path = tmp_path / "test.db"
+        init_db(db_path)
+        # First create a project to archive
+        conn = get_connection(db_path)
+        try:
+            now = datetime.now(timezone.utc).isoformat()
+            conn.execute("INSERT OR IGNORE INTO projects (name, created_at, archived) VALUES (?, ?, 0)", ("testproj", now))
+            conn.commit()
+        finally:
+            conn.close()
+
+        runner = CliRunner()
+        result = runner.invoke(cli, ["project", "archive", "testproj", "--db", str(db_path)])
+        assert result.exit_code == 0
+        assert "testproj" in result.output
