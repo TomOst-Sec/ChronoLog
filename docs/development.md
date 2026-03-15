@@ -38,12 +38,16 @@ chronolog/
   db.py             # SQLite connection, schema init, get_db_path
   exceptions.py     # Custom exception hierarchy (ChronoLogError base)
   models.py         # TimeEntry and Project dataclasses
-  utils.py          # Helpers (stub)
+  utils.py          # Duration formatting, timezone display (stub)
 tests/
   __init__.py
   conftest.py       # Shared fixtures (tmp_db_path)
   test_cli.py       # CLI tests via CliRunner
+  test_config.py    # Configuration get/set tests
   test_core.py      # Timer and project CRUD tests
+  test_db.py        # Database init, schema, connection tests
+  test_exceptions.py # Custom exception tests
+  test_integration.py # End-to-end integration tests
   test_models.py    # TimeEntry/Project serialization tests
 pyproject.toml      # Project metadata and dependencies
 .gitignore          # Python/venv ignores
