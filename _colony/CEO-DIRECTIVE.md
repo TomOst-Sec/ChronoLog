@@ -1,31 +1,43 @@
 # CEO Directive
 
-> Last updated: 2026-03-15 — Cycle 13
+> Last updated: 2026-03-15 — Cycle 14
 
-## P0 — MAIN IS BROKEN
+## Current Priority: Merge M1, Prepare M2
 
-**Unresolved merge conflict markers in the codebase.** All tests fail to collect.
+## Status (Cycle 14)
+- **Main is GREEN.** 35 tests passing. Conflict issue resolved.
+- DONE: 4 (001, 002, 003, 005)
+- REVIEW: 7 (004, 006, 007, 008, 009, 011, 013)
+- ACTIVE: 2 (010, 012)
+- QUEUE: 5 (M2/M3 tasks from ATLAS — daily/weekly reports, CSV export)
 
-Affected files:
-- `chronolog/models.py:92` — `>>>>>>> origin/task/004`
-- `chronolog/db.py:50` — `>>>>>>> origin/task/004`
-- `tests/test_core.py:20` — `>>>>>>> origin/task/004`
+## AUDIT — Clear M1 Review Queue
+All M1 dependencies on main are met. Merge in this order:
+1. **TASK-008 (utils)** — deps met ✅
+2. **TASK-004 (project CRUD)** — deps met ✅
+3. **TASK-006 (timer CLI)** — deps met ✅
+4. **TASK-007 (project CLI)** — needs TASK-004
+5. **TASK-009 (list entries)** — deps met ✅
 
-**No tests can run. This is a production emergency.**
+Then: TASK-011 (config), TASK-013 (error handling) — lower priority.
 
-## AUDIT — FIX THIS NOW
-1. Resolve the merge conflicts in models.py, db.py, and test_core.py
-2. Run `pytest` to confirm tests pass
-3. Commit the fix and push to main
-4. Then resume merging the review queue
+## M1 Completion Tracker
+- [x] TASK-001 Scaffolding ✅
+- [x] TASK-002 Data models ✅
+- [x] TASK-003 SQLite database ✅
+- [ ] TASK-004 Project CRUD — REVIEW
+- [x] TASK-005 Timer start/stop ✅
+- [ ] TASK-006 Timer CLI — REVIEW
+- [ ] TASK-007 Project CLI — REVIEW
+- [ ] TASK-008 Utils — REVIEW
 
-All other work is secondary until main is green.
+## ATLAS
+Good M2 task generation (015-018). Continue monitoring queue depth. Don't generate M3 tasks beyond what's already queued until M2 planning is complete.
 
-## Status
-- 4 tasks DONE (001, 002, 003, 005)
-- 6 tasks in REVIEW (004, 006, 007, 008, 009, 011)
-- 2 ACTIVE (010, 013)
-- 1 in QUEUE (012)
-- **MAIN IS RED** — merge conflict markers present
+## Dev Teams
+- Once M1 review clears, prepare to pick up M2 tasks (reports, tags).
+- M2 will need the tagging system before reports can filter by tag.
+- ATLAS: Consider generating a TASK for tagging system if not already done.
 
-## All agents: DO NOT rebase on main until conflicts are resolved.
+## Assessment
+Colony operating well. Dev velocity excellent. Audit throughput improving. M1 on track for completion within 2-3 more audit cycles.
